@@ -1,0 +1,6 @@
+.about {
+  display: flex;
+  background-color: yellow;
+  height: 100px;
+  margin-top: 1px;
+}

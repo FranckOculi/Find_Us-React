@@ -1,0 +1,6 @@
+.tracks {
+  display: flex;
+  background-color: green;
+  height: 100px;
+  margin-top: 1px;
+}

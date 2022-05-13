@@ -1,0 +1,9 @@
+.tuto {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+  height: 667px;
+  width: 375px;
+  margin: 0;
+}

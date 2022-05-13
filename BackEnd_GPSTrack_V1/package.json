@@ -1,0 +1,25 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon server.js --name 'GPSTRACK_V1'"
+  },
+  "author": "chouchoubeignet",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.0.0",
+    "fast-json-stringify": "^3.1.0",
+    "fastify": "^3.28.0",
+    "fastify-cookie": "^5.6.1",
+    "fastify-cors": "^6.0.3",
+    "fastify-mssql": "^1.1.1",
+    "js-cookie": "^3.0.1",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^1.0.7",
+    "mssql": "^8.1.0",
+    "nodemon": "^2.0.15"
+  }
+}

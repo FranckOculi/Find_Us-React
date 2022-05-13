@@ -1,0 +1,13 @@
+#searchBar {
+  padding: 5px;
+  border-radius: 10px;
+}
+#searchBar input[type='text'] {
+  width: 30%;
+  -webkit-transition: width 0.15s ease-in-out;
+  transition: width 0.15s ease-in-out;
+}
+#searchBarBtnBack {
+}
+#searchBarBtnAdd {
+}

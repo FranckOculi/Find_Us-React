@@ -1,0 +1,249 @@
+Projet FindMyFriend !
+
+                            ###################################################################################################
+
+Pages :
+
+ouverture de l'appli > Page d'accueil :
+Evenements : container pour lister les évenements en cours + Bouton créer un évenement
+footer : 3 onglets (map, Invitation, profil)
+
+Profil : Mes amis, Mes tracks, My account, Contact support, réglage, statistique, A propos
+Map : Map avec la position actuelle. Bouton : "démarrer le tracker". Si clique : tracker de sa propre position. Bouton stop : Si clique : possibilité d'enregistrer sa track : Nom + date
+Invitation : Surligné en vert si une invitation reçu et non lue. Container avec la liste des invitations : Nom de l'ami qui invite, Nom de l'évenement, Durée en petit sous le nom de l'évenement
+Si clique sur l'évenement : Bouton rejoindre l'évenement !
+
+Evenement : bouton créer un évenement :
+Input : Nom de l'évenement, puis...
+Input : Durée de l'evenement : 3 roulettes (jour, heure, minute), puis...
+Génération d'un code ( ELDkFI587 ) de l'évenement à envoyer pour inviter un ami : Proposition d'envoyer le code via mes amis/watsapp/sms/email
+si clique sur mes amis : Menu déroulant la liste des amis et coche les amis à inviter
+
+Page d'accueil :
+Container avec evenement. Si clique sur evenement :
+en haut : Possibilité de cliquer sur le header pour accéder à la liste des personnes dans l'évenement. bouton : ajouter un ami. Si clique sur un ami : map avec sa position + polyline. Bouton Alerte !
+Map : Vision de toutes les positions actuelles: Marker = Première lettre du prénom par défaut sinon photo de profil. Si clique sur un tracé ou marker : Accès aux données du tracé (nom de la personne)
+
+                            ###################################################################################################
+
+Grands principes / code :
+
+Stockage des données :
+Map personnelle : En local
+Map évenement : En base de donnée pour accès par tous
+
+Utilisateur : A l'ouvertude de l'appli (app.js) : check du cache - si oui : implémentation du hook userInfo pour utilisation par tous les composants enfants
+                                                si non : check des données utilisateur - si oui : implémentation du hook userInfo pour utilisation par tous les composants enfants
+                                                si non : page de connexion
+position GPS : En cas d'évenement en cours (1 seul à la fois ?) : Mise à jour des positions en BD et implémentation en local dans le hook position
+
+Géolocalisation :
+Map personnelle :
+------> A l'ouverture de la map : chargement / Check de sa position puis si position : Affichage de la map
+------> Si clique sur bouton track : ajouter à polyline + BD la position actuelle puis affichage du polyline
+Map évenement :
+------> A l'ouverture de l'évenement : Chargement des données de la base de donnée puis affichage des membres + position actuelle sur la map > mise à jour des polyline si réception des infos de la BB sinon pas de mise à jour. Bouton Alerte en rouge : Envoi d'un signal sonore + vibration à tous les membres de l'evenements
+------> Si clique sur un tracé / marker : Affichage du nom de la personne. Bouton Alerte : Envoi d'un signal sonore sur son téléphone même en cas de silencieux
+
+                            ###################################################################################################
+
+Base de données :
+Table : Utilisateurs, Amis, Evenements, PositionGPS, Création de groupes ?
+
+Groupes : A voir si pertinent
+GroupeId, PK
+nom du groupe, not null,
+photo du groupe, null,
+
+UserGroupe : Table intermédiaire afin d'avoir plusieurs groupes pour un utilisateur
+UserGroupeId : PK, FK References Utilisateurs(UserId)
+GroupeId : PK, FK References Groupes(GroupeId)
+
+Utilisateurs :
+UserId, Identity (1,1) PK,
+pseudo, not null
+prenom, not null
+nom, not null
+email, unique not null
+mot de passe, not null,
+numéro de téléphone, not null
+photo de profil, null,
+date de création du compte, DF getDate() not null,
+status de tracking : true / false DF false not null
+
+Amis :
+AmisId, Identity (1,1) PK,
+EmetteurUserId, PK, (id de l'utilisateur qui a des amis) FK References Utilisateurs(UserId),
+RécepteurUserId, PK, (id de l'utilisateur qui est dans la liste d'amis) FK References Utilisateurs(UserId),
+Date DF, getDate() not null
+
+Evenement :
+CodeEvent, PK,
+Nom, not null,
+Durée, not null
+Créateur de l'envent, not null FK References Utilisateurs(UserId),
+Date, DF getDate() not null,
+membres, null
+
+Position GPS :
+idPosition, PK,
+latitude, not null,
+longitude, not null,
+UserId, FK References Utilisateurs(UserId),
+CodeEvent, FK References Evenement(CodeEvent),
+date, DF getDate() not null,
+
+                            ######################################################
+
+Script : BD :
+
+CREATE TABLE Utilisateurs (
+utilisateurId INT not null IDENTITY(1,1),
+pseudo VARCHAR(25) not null,
+prenom VARCHAR(25) not null,
+nom VARCHAR(25) not null,
+mail VARCHAR(50) UNIQUE not null,
+motDePasse VARCHAR(1024) not null,
+numeroTelephone NUMERIC(10) not null,
+photoProfil VARCHAR(80) null,
+dateCreation DATE not null CONSTRAINT DF_Utilisateurs_dateCreation DEFAULT getDate(),
+statusTracking VARCHAR(5) not null CONSTRAINT DF_Utilsiateurs_statusTracking DEFAULT 'false',
+CONSTRAINT PK_Utilisateurs_userId PRIMARY KEY (utilisateurId)
+);
+
+CREATE TABLE Amis (
+amiId INT not null IDENTITY(1,1),  
+emetteurUserId INT not null,
+recepteurUserId INT not null,
+dateAmi DATE not null CONSTRAINT DF_Amis_dateAmi DEFAULT getDate(),
+CONSTRAINT PK_Amis_amisId PRIMARY KEY(amiId, emetteurUserId, recepteurUserId),
+CONSTRAINT FK_Amis_Utilisateurs_emetteurUserId FOREIGN KEY (emetteurUserId) REFERENCES Utilisateurs(utilisateurId) ON DELETE CASCADE,
+CONSTRAINT FK_Amis_Utilisateurs_recepteurUserId FOREIGN KEY (recepteurUserId) REFERENCES Utilisateurs(utilisateurId)
+);
+
+CREATE TABLE Evenements (
+codeEvenement CHAR(8) UNIQUE not null,
+nomEvenement VARCHAR (25) not null,
+createur INT not null,
+dateEvenement DATETIME not null CONSTRAINT DF_Evenements_dateEvenement DEFAULT getDate(),
+dateFin DATETIME not null,
+pseudoCreateur VARCHAR(25) not null,
+membres VARCHAR(1000) null,
+CONSTRAINT PK_Evenements_codeEvenement PRIMARY KEY (codeEvenement),
+CONSTRAINT FK_Evenements_Utilisateurs_createur FOREIGN KEY (createur) REFERENCES Utilisateurs(utilisateurId) ON DELETE CASCADE
+);
+
+CREATE TABLE Invitations (
+codeEvenementInvitation CHAR(8) not null,
+InviteId INT not null,
+statusInvitation VARCHAR(5) null CONSTRAINT DF_Invitations_statusInvitation DEFAULT 'false',
+CONSTRAINT PK_Invitations PRIMARY KEY(codeEvenementInvitation, InviteId),
+CONSTRAINT FK_Invitations_CodeEvenementInvitation FOREIGN KEY(codeEvenementInvitation) REFERENCES Evenements(codeEvenement),
+CONSTRAINT FK_Invitations_InviteId FOREIGN KEY(inviteId) REFERENCES utilisateurs(utilisateurId) 
+)
+
+CREATE TABLE Positions (
+positionId INT not null IDENTITY(1,1),
+latitude NUMERIC(22,20) not null,
+longitude NUMERIC(22,20) not null,
+utilisateurPosition INT not null,
+codeEvenement CHAR(8) not null,
+datePosition DATETIME not null CONSTRAINT DF_Positions_datePosition DEFAULT getDate(),
+CONSTRAINT PK_Positions_positionId PRIMARY KEY (positionId),
+CONSTRAINT FK_Positions_Utilisateurs_utilisateurPosition FOREIGN KEY (utilisateurPosition) REFERENCES Utilisateurs (utilisateurId) ON DELETE CASCADE,
+CONSTRAINT FK_Positions_Evenements_codeEvenement FOREIGN KEY (codeEvenement) REFERENCES Evenements(codeEvenement)
+);
+
+CREATE TABLE Groupes (
+codeGroupe CHAR(8) UNIQUE not null,
+nomGroupe VARCHAR (25) not null,
+createur INT not null,
+description VARCHAR(200) null,
+photoGroupe VARCHAR(80) null,
+dateGroupe DATETIME not null CONSTRAINT DF_Groupes_dateCreation DEFAULT getDate(),
+CONSTRAINT PK_Groupes_codeGroupe PRIMARY KEY (codeGroupe),
+);
+
+
+CREATE TABLE Membres (
+membreId INT not null,
+groupeCode CHAR(8) not null,
+admin VARCHAR(5) not null CONSTRAINT DF_Membres_admin DEFAULT 'false',
+CONSTRAINT PK_Membres PRIMARY KEY (membreId, groupeCode),
+CONSTRAINT FK_Membres_membreId FOREIGN KEY (membreId) REFERENCES Utilisateurs(utilisateurId),
+CONSTRAINT FK_Membres_groupeCode FOREIGN KEY (groupeCode) REFERENCES Groupes(codeGroupe) on delete cascade
+);
+
+
+
+
+CREATE NONCLUSTERED INDEX FK_Amis_emetteurUserId
+	ON Amis(emetteurUserId ASC)
+;
+CREATE NONCLUSTERED INDEX FK_Amis_recepteurUserId
+	ON Amis(recepteurUserId ASC)
+;
+
+CREATE NONCLUSTERED INDEX FK_Evenements_createur
+	ON Evenements(createur ASC)
+;
+
+CREATE NONCLUSTERED INDEX FK_Positions_utilisateurPosition
+	ON Positions(utilisateurPosition ASC)
+;
+
+CREATE NONCLUSTERED INDEX FK_Positions_codeEvenement
+	ON Positions(codeEvenement ASC)
+;
+
+
+
+INSERT INTO Utilisateurs (pseudo, prenom, nom, mail, motDePasse, numeroTelephone)
+	values( 'chouchou', 'franck', 'test', 'test@gmail.com', 'test', 0683630987)
+;
+
+INSERT INTO Utilisateurs (pseudo, prenom, nom, mail, motDePasse, numeroTelephone)
+	values( 'fromscratch', 'mathieu', 'noname', 'noname@gmail.com', 'test', 0683630954)
+;
+
+INSERT INTO Utilisateurs (pseudo, prenom, nom, mail, motDePasse, numeroTelephone)
+	values( 'john', 'john', 'doe', 'john@gmail.com', 'john', 0683630925)
+;
+
+INSERT INTO Utilisateurs (pseudo, prenom, nom, mail, motDePasse, numeroTelephone)
+	values( 'jean', 'jean', 'dupont', 'jean@gmail.com', 'jean', 0683630925)
+;
+
+INSERT INTO Utilisateurs (pseudo, prenom, nom, mail, motDePasse, numeroTelephone)
+	values( 'frank', 'frank', 'dubosc', 'frank@gmail.com', 'frank', 0683630914)
+;
+
+INSERT INTO Utilisateurs (pseudo, prenom, nom, mail, motDePasse, numeroTelephone)
+	values( 'mireille', 'mireille', 'mathieu', 'mireille@gmail.com', 'mireille', 0683630947)
+;
+
+
+INSERT INTO Evenements (codeEvenement, nomEvenement, duree, createur)
+	values( 'AAaa11-_', 'Test', 000500, 1)
+;
+INSERT INTO Evenements (codeEvenement, nomEvenement, duree, createur)
+	values( 'BBbb22-_', 'Test2', 010000, 2)
+;
+
+
+INSERT INTO Positions (latitude, longitude, utilisateurPosition, codeEvenement)
+	values (48.87479633158923, 2.3383230653812737, 1, 'AAaa11-_')
+;
+
+
+                            #############################################
+
+Routage :
+Première connexion ?
+créer un compte
+accepter les conditions d'utilisations + autorisation de géolocalisation > Création du token(durée max), pas de login
+
+accès à la page d'accueil, si non : redirect : login
+
+server : DESKTOP-PRDTEK5
+port : 1433 > 5000

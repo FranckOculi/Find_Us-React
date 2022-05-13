@@ -1,0 +1,147 @@
+.eventForm {
+  display: flex;
+  flex-direction: column;
+  height: 571px;
+  margin-top: 1px;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+/*---------------State 1---------------*/
+#eventP {
+  margin-top: 75px;
+  font-weight: 600;
+  color: rgb(59, 59, 59);
+  font-size: 16px;
+}
+
+.eventInputText {
+  position: absolute;
+  top: 215px;
+  left: 60px;
+  font-weight: 500;
+  color: rgb(59, 59, 59);
+  font-size: 15px;
+}
+.inputEventForm {
+  margin-top: 100px;
+  display: flex;
+  width: 250px;
+  height: 28px;
+  border-radius: 4px;
+  border: 1px solid rgb(113, 113, 113);
+  font-size: 15px;
+}
+
+.inputEventFormError {
+  margin-top: 100px;
+  display: flex;
+  width: 250px;
+  height: 28px;
+  border-radius: 4px;
+  border: 1px solid red;
+  font-size: 15px;
+}
+
+/*---------------State 2---------------*/
+
+#eventDateTextDebut {
+  position: absolute;
+  top: 249px;
+  left: 60px;
+  font-weight: 500;
+  color: rgb(59, 59, 59);
+  font-size: 15px;
+}
+
+#dateEventDebut {
+  margin-top: 100px;
+  margin-left: 54px;
+  display: flex;
+  width: 195px;
+  height: 28px;
+  border-radius: 4px;
+  border: 1px solid rgb(113, 113, 113);
+  font-size: 15px;
+}
+
+#dateEventDebutError {
+  margin-top: 100px;
+  margin-left: 54px;
+  display: flex;
+  width: 195px;
+  height: 28px;
+  border-radius: 4px;
+  border: 1px solid red;
+  font-size: 15px;
+}
+#eventDateTextEnd {
+  position: absolute;
+  top: 286px;
+  left: 60px;
+  font-weight: 500;
+  color: rgb(59, 59, 59);
+  font-size: 15px;
+}
+#dateEventEnd {
+  margin-top: 5px;
+  margin-left: 54px;
+  display: flex;
+  width: 195px;
+  height: 28px;
+  border-radius: 4px;
+  border: 1px solid rgb(113, 113, 113);
+  font-size: 15px;
+}
+
+#dateEventEndError {
+  margin-top: 5px;
+  margin-left: 54px;
+  display: flex;
+  width: 195px;
+  height: 28px;
+  border-radius: 4px;
+  border: 1px solid red;
+  font-size: 15px;
+}
+
+.eventRegister {
+  margin-top: 5px;
+  width: 256px;
+  height: 30px;
+  border: 1px solid rgb(113, 113, 113);
+  border-radius: 4px;
+  background-color: #1f69ec;
+  color: rgb(254, 249, 249);
+  font-weight: 500;
+}
+.eventCancel {
+  margin-top: -58px;
+  margin-left: 274px;
+  width: 50px;
+  height: 25px;
+  border: 1px solid rgb(255, 113, 113);
+  border-radius: 4px;
+  background-color: rgb(255, 113, 113);
+  color: rgb(254, 249, 249);
+}
+#eventFormSubmit {
+  margin-top: 5px;
+  width: 256px;
+  height: 30px;
+  border: 1px solid rgb(113, 113, 113);
+  border-radius: 4px;
+  background-color: #91afe3;
+  color: rgb(254, 249, 249);
+  font-weight: 500;
+}
+#eventFormSubmitActive {
+  margin-top: 5px;
+  width: 256px;
+  height: 30px;
+  border: 1px solid rgb(113, 113, 113);
+  border-radius: 4px;
+  background-color: #1f69ec;
+  color: rgb(254, 249, 249);
+  font-weight: 500;
+}

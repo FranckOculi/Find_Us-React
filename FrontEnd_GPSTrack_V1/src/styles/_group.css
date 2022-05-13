@@ -1,0 +1,23 @@
+.groupsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 355px;
+  height: 551px;
+  margin: 10px;
+  background-color: rgb(255, 255, 255);
+  max-height: 100%;
+  overflow: scroll;
+  padding-top: 1px;
+}
+.groupContainerForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 355px;
+  height: 550px;
+  margin: 10px;
+  background-color: rgb(254, 249, 249);
+}

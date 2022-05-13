@@ -1,0 +1,17 @@
+.settings {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 667px;
+  width: 375px;
+  margin: 0;
+}
+.settingsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 355px;
+  height: 551px;
+  margin: 10px;
+  background-color: rgb(245, 248, 248);
+}

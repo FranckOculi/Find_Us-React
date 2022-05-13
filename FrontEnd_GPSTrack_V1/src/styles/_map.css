@@ -1,0 +1,23 @@
+.map {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 667px;
+  width: 375px;
+  margin: 0;
+}
+
+.leaflet-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 373px;
+  height: 571px;
+  margin: 1px;
+  z-index: 1;
+}
+
+.leaflet-top .leaflet-control {
+  margin-top: 30px;
+}

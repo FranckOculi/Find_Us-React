@@ -1,0 +1,6 @@
+.account {
+  display: flex;
+  background-color: brown;
+  height: 100px;
+  margin-top: 1px;
+}
