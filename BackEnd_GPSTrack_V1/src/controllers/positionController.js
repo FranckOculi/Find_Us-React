@@ -36,16 +36,53 @@ export async function getPositions(req, res) {
   }
 }
 
-export async function getLastPosition(req, res) {
-  const lastPosition = await dbServer
-    .select('latitude', 'longitude')
-    .from('Positions')
-    .where({
-      utilisateurPosition: req.params.id,
-    })
-    .orderBy('datePosition', 'desc')
-    .limit(1);
-  return res
-    .code(200)
-    .send({ message: 'Last position', lastPosition: lastPosition });
+export async function getLastPositions(req, res) {
+  if (req.headers.tokenInfo.authorization == req.params.id) {
+    const data = await dbServer
+      .select('latitude', 'longitude', 'utilisateurPosition')
+      .from('Positions')
+      .where({
+        codeEvenement: req.params.codeGroup,
+      })
+      .orderBy('datePosition', 'desc');
+
+    const friendsId = [];
+    if (data[0]) {
+      for (let i = 0; i < data.length; i++) {
+        friendsId.push(data[i].utilisateurPosition);
+      }
+    }
+
+    const lastPositions = await dbServer
+      .select(
+        'utilisateurId',
+        'pseudo',
+        'prenom',
+        'nom',
+        'mail',
+        'numeroTelephone',
+        'photoProfil',
+        'dateCreation',
+        'statusTracking',
+        'latitude',
+        'longitude',
+      )
+      .from('Positions')
+      .join(
+        'Utilisateurs as u',
+        'Positions.utilisateurPosition',
+        '=',
+        'u.utilisateurId',
+      )
+      .whereIn('utilisateurId', friendsId)
+      .where({
+        codeEvenement: req.params.codeGroup,
+      })
+      .orderBy('datePosition', 'desc');
+    return res
+      .code(200)
+      .send({ message: 'Last positions', lastPositions: lastPositions });
+  } else {
+    return res.code(401).send({ message: 'Error token' });
+  }
 }

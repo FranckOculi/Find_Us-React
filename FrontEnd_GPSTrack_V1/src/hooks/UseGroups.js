@@ -18,9 +18,9 @@ import _ from 'lodash';
 
 export default function UseGroups() {
   const dispatch = useDispatch();
-  const groupsData = useSelector((state) => state.userGroups);
-  const membersData = useSelector((state) => state.groupMembers);
-  const allMembersData = useSelector((state) => state.allMembers);
+  const groupsData = useSelector((state) => state.groups);
+  const membersData = useSelector((state) => state.groupSingleMembers);
+  const allMembersData = useSelector((state) => state.groupsMembers);
 
   /*  Groups  */
   const loadGroupsData = async (userId, data) => {
@@ -29,7 +29,6 @@ export default function UseGroups() {
       eachGroupCode.push(data[i].groupeCode);
     }
     return getGroups(userId, eachGroupCode).then((res) => {
-      console.log(res);
       if (res?.data?.userGroups) {
         let i = 0;
         do {

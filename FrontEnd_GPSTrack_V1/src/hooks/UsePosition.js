@@ -1,28 +1,29 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { addPosition } from '../feature/group/groupSingleMembersSlice';
+import { addFriendsPositions } from '../feature/position/friendsPositionsSlice';
 import { setPosition } from '../feature/position/positionsSlice';
 import { getLastPosition } from '../services/PositionsApi';
 import { isEmpty } from '../utils/Utils';
 
 export default function UseEvents() {
   const dispatch = useDispatch();
-  const currentPosition = useSelector((state) => state.userPositions);
+  const currentPosition = useSelector((state) => state.positions);
+  const currentFriendsPosition = useSelector((state) => state.friendsPositions);
 
   //Load friends current position
-  const getFriendsCurrentPosition = async (eventMembers) => {
-    if (!isEmpty(eventMembers)) {
-      for (let i = 0; i < eventMembers.length; i++) {
-        await getLastPosition(eventMembers[i].utilisateurId).then((res) => {
-          if (!isEmpty(res.data.lastPosition)) {
-            const data = [
-              eventMembers[i].utilisateurId,
-              res.data.lastPosition[0],
-            ];
-            dispatch(addPosition(data));
-          }
-        });
+  const getFriendsCurrentPosition = async (id) => {
+    const codeGroup = 'DDth!(36';
+    await getLastPosition(id, codeGroup).then((res) => {
+      console.log(res);
+      console.log(res.data.lastPositions);
+      if (res?.data?.lastPositions) {
+        let i = 0;
+        do {
+          dispatch(addFriendsPositions(res.data.lastPositions[i]));
+          i++;
+        } while (i < res.data.lastPositions.length);
       }
-    }
+    });
   };
 
   //Load user current position
@@ -40,5 +41,6 @@ export default function UseEvents() {
     currentPosition,
     getFriendsCurrentPosition,
     loadCurrentPosition,
+    currentFriendsPosition,
   };
 }

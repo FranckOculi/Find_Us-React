@@ -12,10 +12,10 @@ import Token from './Token';
 //   });
 // };
 
-export async function getLastPosition(id, codeEvent) {
+export async function getLastPosition(id, codeGroup) {
   return await axios({
     method: 'GET',
-    url: `http://localhost:3000/position/${id}/${codeEvent}/lastposition`,
+    url: `http://localhost:3000/position/${id}/${codeGroup}/lastpositions`,
     withCredentials: true,
     headers: {
       authorization: Token.getToken(),

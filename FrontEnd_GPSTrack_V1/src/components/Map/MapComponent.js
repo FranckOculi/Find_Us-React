@@ -3,14 +3,23 @@ import { MapContainer, Marker, TileLayer, Popup } from 'react-leaflet';
 import Loader from '../other/Loader';
 import UsePosition from '../../hooks/UsePosition';
 import { isEmpty } from '../../utils/Utils';
+import UserInfos from '../../hooks/UserInfos';
+import MapMaterial from '../../ui/map/MapMaterial';
 
 const MapComponent = ({ mapLoaded }) => {
   const isMounted = useRef(true);
   const [loadPage, setLoadPage] = useState(false);
   const [reload, setReload] = useState(false);
+  const { CustomMarker } = MapMaterial();
   const refreshDelay = 5000;
-  const { currentPosition, getFriendsCurrentPosition, loadCurrentPosition } =
-    UsePosition();
+  const {
+    currentPosition,
+    getFriendsCurrentPosition,
+    loadCurrentPosition,
+    currentFriendsPosition,
+  } = UsePosition();
+  const { userData } = UserInfos();
+
   const API_ENDPOINT =
     '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
   const API_URL = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
@@ -40,9 +49,10 @@ const MapComponent = ({ mapLoaded }) => {
       console.log(e);
     }
   };
-
   //Friends position
-  // const getFriendPosition = () => getFriendsCurrentPosition(eventMembers);
+  const getFriendPosition = () => {
+    return getFriendsCurrentPosition(userData.utilisateurId);
+  };
 
   //Refresh positions
   function refresh() {
@@ -52,9 +62,10 @@ const MapComponent = ({ mapLoaded }) => {
     }, refreshDelay);
   }
   useEffect(() => {
+    console.log('bonjour');
     if (!loadPage) {
       getPosition();
-      // getFriendPosition();
+      getFriendPosition();
     }
     if (loadPage) getPosition();
     return () => (isMounted.current = false);
@@ -70,21 +81,28 @@ const MapComponent = ({ mapLoaded }) => {
       zoom={zoom}
     >
       <TileLayer attribution={API_ENDPOINT} url={API_URL} />
-      {/* {!isEmpty(eventMembers) &&
-        eventMembers.map(
+      {currentFriendsPosition[0] &&
+        currentFriendsPosition.map(
           (member) =>
-            !isEmpty(member.position) && (
+            member.latitude && (
               <Marker
                 key={member.utilisateurId}
-                position={[member.position.latitude, member.position.longitude]}
+                position={[member.latitude, member.longitude]}
               >
                 <Popup>{member.prenom}</Popup>
               </Marker>
             ),
-        )} */}
+        )}
       <Marker position={[currentPosition.latitude, currentPosition.longitude]}>
         <Popup>You</Popup>
       </Marker>
+
+      {/* <CustomMarker
+        userData={userData}
+        position={[currentPosition.latitude, currentPosition.longitude]}
+      >
+        <Popup>You</Popup>
+      </CustomMarker> */}
     </MapContainer>
   );
 };

@@ -2,13 +2,14 @@ import { configureStore } from '@reduxjs/toolkit';
 import userAuthReducer from '../feature/user/userAuthSlice';
 import userIdReducer from '../feature/user/userIdSlice';
 import userInfosReducer from '../feature/user/userInfosSlice';
-import userGroupsReducer from '../feature/group/groupsSlice';
+import groupsReducer from '../feature/group/groupsSlice';
 import groupSingleMembersReducer from '../feature/group/groupSingleMembersSlice';
-import userGroupInvitationsReducer from '../feature/group/groupInvitationsSlice';
-import userGroupMembersReducer from '../feature/group/groupsMembersSlice';
+import groupInvitationsReducer from '../feature/group/groupInvitationsSlice';
+import groupsMembersReducer from '../feature/group/groupsMembersSlice';
 import positionsReducer from '../feature/position/positionsSlice';
-import userFriendsReducer from '../feature/friends/userFriendsSlice';
-import friendsReducer from '../feature/friends/friendsSlice';
+import friendsPositionsReducer from '../feature/position/friendsPositionsSlice';
+import friendsIdReducer from '../feature/friend/friendsIdSlice';
+import friendsDataReducer from '../feature/friend/friendsDataSlice';
 import themeReducer from '../feature/other/themeSlice';
 
 export default configureStore({
@@ -16,13 +17,14 @@ export default configureStore({
     userAuth: userAuthReducer,
     userId: userIdReducer,
     userInfos: userInfosReducer,
-    userGroups: userGroupsReducer,
-    userGroupMembers: userGroupMembersReducer,
+    groups: groupsReducer,
+    groupsMembers: groupsMembersReducer,
     groupSingleMembers: groupSingleMembersReducer,
-    userGroupInvitations: userGroupInvitationsReducer,
+    groupInvitations: groupInvitationsReducer,
     positions: positionsReducer,
-    userFriends: userFriendsReducer,
-    friends: friendsReducer,
+    friendsPositions: friendsPositionsReducer,
+    friendsId: friendsIdReducer,
+    friendsData: friendsDataReducer,
     theme: themeReducer,
   },
 });

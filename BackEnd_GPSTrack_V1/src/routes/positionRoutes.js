@@ -1,7 +1,7 @@
 import {
   addPosition,
   getPositions,
-  getLastPosition,
+  getLastPositions,
 } from '../controllers/positionController.js';
 import {
   addPositionSchema,
@@ -20,7 +20,7 @@ async function positionRoutes(fastify, options, done) {
 
   fastify.route({
     method: 'GET',
-    url: '/:id/:codeEvent/positions',
+    url: '/:id/:codeGroup/positions',
     schema: getPositionSchema,
     preHandler: tokenVerification,
     handler: getPositions,
@@ -28,10 +28,10 @@ async function positionRoutes(fastify, options, done) {
 
   fastify.route({
     method: 'GET',
-    url: '/:id/:codeEvent/lastposition',
+    url: '/:id/:codeGroup/lastpositions',
     schema: getPositionSchema,
     preHandler: tokenVerification,
-    handler: getLastPosition,
+    handler: getLastPositions,
   });
 }
 export default positionRoutes;

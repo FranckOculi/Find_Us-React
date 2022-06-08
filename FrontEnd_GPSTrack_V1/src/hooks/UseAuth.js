@@ -7,7 +7,7 @@ import { clearGroupStore } from '../feature/group/groupsSlice';
 import { removeMemberStore } from '../feature/group/groupSingleMembersSlice';
 import { clearAllMembers } from '../feature/group/groupsMembersSlice';
 import { setPosition } from '../feature/position/positionsSlice';
-import { clearFriends } from '../feature/friends/userFriendsSlice';
+import { clearFriends } from '../feature/friend/friendsIdSlice';
 import UserInfos from './UserInfos';
 import UseGroups from './UseGroups';
 import UseFriends from './UseFriends';

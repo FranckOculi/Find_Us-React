@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { setFriends } from '../feature/friends/userFriendsSlice';
-import { setFriendsData } from '../feature/friends/friendsSlice';
+import { setFriends } from '../feature/friend/friendsIdSlice';
+import { setFriendsData } from '../feature/friend/friendsDataSlice';
 import {
   getAllFriends,
   addFriend,
@@ -11,8 +11,8 @@ import { isEmpty } from '../utils/Utils';
 
 export default function UseFriends() {
   const dispatch = useDispatch();
-  const friendsId = useSelector((state) => state.userFriends);
-  const friendsData = useSelector((state) => state.friends);
+  const friendsId = useSelector((state) => state.friendsId);
+  const friendsData = useSelector((state) => state.friendsData);
 
   //Load All friendsId
   const loadFriendsId = async (data) => {

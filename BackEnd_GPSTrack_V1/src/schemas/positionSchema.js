@@ -20,9 +20,10 @@ const paramsJsonSchemaAdd = {
 
 const paramsJsonSchemaGet = {
   type: 'object',
-  required: ['id'],
+  required: ['id', 'codeGroup'],
   properties: {
     id: { type: 'number' },
+    codeGroup: { type: 'string' },
   },
 };
 

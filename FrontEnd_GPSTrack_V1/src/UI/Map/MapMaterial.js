@@ -5,6 +5,8 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import Collapse from '@mui/material/Collapse';
 import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
+import { Marker } from 'react-leaflet';
+import L from 'leaflet';
 
 const MapMaterial = () => {
   const [expandedMember, setExpandedMember] = useState(false);
@@ -62,7 +64,22 @@ const MapMaterial = () => {
     );
   };
 
-  return { SelectGroupCard };
+  const CustomMarker = ({ position, children }) => {
+    function getIcon(_iconSize) {
+      return L.icon({
+        iconUrl: require('../../img/logo.png'),
+        iconSize: [_iconSize],
+      });
+    }
+
+    return (
+      <Marker position={position} icon={getIcon(20, 20)}>
+        {children}
+      </Marker>
+    );
+  };
+
+  return { SelectGroupCard, CustomMarker };
 };
 
 export default MapMaterial;
