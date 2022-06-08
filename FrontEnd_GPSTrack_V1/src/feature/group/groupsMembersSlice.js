@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export const allMembersSlice = createSlice({
-  name: 'allMembers',
+export const userGroupMembers = createSlice({
+  name: 'userGroupMembers',
   initialState: { groupes: null },
 
   reducers: {
@@ -18,5 +18,5 @@ export const allMembersSlice = createSlice({
   },
 });
 
-export const { addAllMembers, clearAllMembers } = allMembersSlice.actions;
-export default allMembersSlice.reducer;
+export const { addAllMembers, clearAllMembers } = userGroupMembers.actions;
+export default userGroupMembers.reducer;

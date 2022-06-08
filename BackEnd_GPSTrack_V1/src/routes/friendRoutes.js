@@ -6,6 +6,7 @@ import {
 import {
   getAllFriendsSchema,
   addFriendSchema,
+  getFriendsSchema,
 } from '../schemas/friendSchema.js';
 import { tokenVerification } from '../middleware/authMiddleware.js';
 
@@ -27,10 +28,10 @@ async function friendRoutes(fastify, options, done) {
   });
 
   fastify.route({
-    method: 'POST',
-    url: '/:id/friendsData',
-    // schema: getFriendsSchema,
-    // preHandler: tokenVerification,
+    method: 'GET',
+    url: '/:id/:friendsId/friendsData',
+    schema: getFriendsSchema,
+    preHandler: tokenVerification,
     handler: getFriendsData,
   });
 }

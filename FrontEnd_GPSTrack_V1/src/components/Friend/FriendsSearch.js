@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import UseFriends from '../../hooks/UseFriends';
-import Loader from '../Other/Loader';
+import Loader from '../other/Loader';
 import { isEmpty } from '../../utils/Utils';
-
-import FriendsSearchMaterial from '../../UI/Friend/FriendsSearchMaterial';
+import FriendsSearchMaterial from '../../ui/friend/FriendsSearchMaterial';
 
 const FriendsSearch = ({ userData, handleAddMember, handleAddMemberModal }) => {
   const [isLoad, setIsLoad] = useState(false);

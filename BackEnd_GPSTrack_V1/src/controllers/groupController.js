@@ -4,6 +4,7 @@ import Token from '../utils/Token.js';
 /* Groups */
 
 export async function getAllGroups(req, res) {
+  const codeGroupe = req.params.codeGroup.split(',');
   if (req.headers.tokenInfo.authorization == req.params.id) {
     const groups = await dbServer
       .select(
@@ -15,7 +16,7 @@ export async function getAllGroups(req, res) {
         'dateGroupe',
       )
       .from('Groupes')
-      .whereIn('codeGroupe', req.body);
+      .whereIn('codeGroupe', codeGroupe);
 
     const membersData = await dbServer
       .select(
@@ -35,7 +36,7 @@ export async function getAllGroups(req, res) {
       .from('Membres')
       .join('Utilisateurs as u', 'Membres.membreId', '=', 'u.utilisateurId')
       .join('Groupes as g', 'Membres.groupeCode', '=', 'g.codeGroupe')
-      .whereIn('groupeCode', req.body)
+      .whereIn('groupeCode', codeGroupe)
       .groupBy(
         'groupeCode',
         'utilisateurId',
@@ -100,16 +101,20 @@ export async function addGroup(req, res) {
 }
 
 export async function deleteGroup(req, res) {
-  await dbServer.delete().from('Groupes').where({
-    codeGroupe: req.params.codeGroup,
-  });
-
-  return res.code(200).send({
-    message: 'Group deleted !',
-    data: {
+  if (req.headers.tokenInfo.authorization == req.params.id) {
+    await dbServer.delete().from('Groupes').where({
       codeGroupe: req.params.codeGroup,
-    },
-  });
+    });
+
+    return res.code(200).send({
+      message: 'Group deleted !',
+      data: {
+        codeGroupe: req.params.codeGroup,
+      },
+    });
+  } else {
+    return res.code(401).send({ message: 'Error token' });
+  }
 }
 
 export async function updateGroup(req, res) {
@@ -129,6 +134,7 @@ export async function updateGroup(req, res) {
 
 /* Members */
 export async function getAllMembers(req, res) {
+  const codeGroupe = req.params.codeGroup.split(',');
   const members = await dbServer
     .distinct(
       'utilisateurId',
@@ -144,32 +150,36 @@ export async function getAllMembers(req, res) {
     )
     .from('Utilisateurs')
     .join('Membres as m', 'Utilisateurs.utilisateurId', '=', 'm.membreId')
-    .whereIn('groupeCode', req.body);
+    .whereIn('groupeCode', codeGroupe);
   return res.code(200).send({ message: 'All members !', members: members });
 }
 
 export async function getMembers(req, res) {
-  const members = await dbServer
-    .select(
-      'utilisateurId',
-      'pseudo',
-      'prenom',
-      'nom',
-      'mail',
-      'numeroTelephone',
-      'photoProfil',
-      'dateCreation',
-      'statusTracking',
-      'admin',
-    )
-    .from('Membres')
-    .join('Utilisateurs as u', 'Membres.membreId', '=', 'u.utilisateurId')
-    .where({ groupeCode: req.params.codeGroup });
+  if (req.headers.tokenInfo.authorization == req.params.id) {
+    const members = await dbServer
+      .select(
+        'utilisateurId',
+        'pseudo',
+        'prenom',
+        'nom',
+        'mail',
+        'numeroTelephone',
+        'photoProfil',
+        'dateCreation',
+        'statusTracking',
+        'admin',
+      )
+      .from('Membres')
+      .join('Utilisateurs as u', 'Membres.membreId', '=', 'u.utilisateurId')
+      .where({ groupeCode: req.params.codeGroup });
 
-  return res.code(200).send({
-    message: 'All members',
-    members: members,
-  });
+    return res.code(200).send({
+      message: 'All members',
+      members: members,
+    });
+  } else {
+    return res.code(401).send({ message: 'Error token' });
+  }
 }
 
 export async function addMember(req, res) {

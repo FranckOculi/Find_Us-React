@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Sequence1 from '../components/Tuto/Sequence1';
-import Sequence2 from '../components/Tuto/Sequence2';
+import Sequence1 from '../components/tuto/Sequence1';
+import Sequence2 from '../components/tuto/Sequence2';
 import UseAuth from '../hooks/UseAuth';
 
 const Tuto = () => {

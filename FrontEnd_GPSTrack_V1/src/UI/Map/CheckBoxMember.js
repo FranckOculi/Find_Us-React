@@ -10,7 +10,6 @@ import Collapse from '@mui/material/Collapse';
 import { Paper } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import Divider from '@mui/material/Divider';
-import AppAvatar from '../Group/AppAvatar';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -50,15 +49,21 @@ const Switch = ({ id, type, name, handleClick, isChecked }) => {
   );
 };
 
-const CheckBoxMember = ({ group }) => {
+const CheckBoxMember = ({
+  group,
+  MapPhoto,
+  MapLogoDefault,
+  MapPhotoMember,
+  MapLogoMemberDefault,
+}) => {
   const { allMembersData } = UseGroups();
   const { userData } = UserInfos();
   const [isCheckAll, setIsCheckAll] = useState(false);
   const [isCheck, setIsCheck] = useState([]);
   const [expandedGroup, setExpandedGroup] = useState(false);
 
-  const { MapPhoto, MapLogoDefault, MapPhotoMember, MapLogoMemberDefault } =
-    AppAvatar();
+  // const { MapPhoto, MapLogoDefault, MapPhotoMember, MapLogoMemberDefault } =
+  //   AppAvatar();
 
   const handleExpandDescription = () => {
     setExpandedGroup(!expandedGroup);

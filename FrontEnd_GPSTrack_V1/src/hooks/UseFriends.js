@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { setFriends } from '../feature/userFriendsSlice';
-import { setFriendsData } from '../feature/friendsSlice';
+import { setFriends } from '../feature/friends/userFriendsSlice';
+import { setFriendsData } from '../feature/friends/friendsSlice';
 import {
   getAllFriends,
   addFriend,
@@ -34,7 +34,7 @@ export default function UseFriends() {
     // return friendsId;
   };
 
-  const loadFriendsData = async (data, id) => {
+  const loadFriendsData = async (id, data) => {
     return await getFriendsData(data, id).then((res) => {
       if (res?.data?.friendsData) {
         let i = 0;

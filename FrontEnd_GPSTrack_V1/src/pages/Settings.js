@@ -1,7 +1,7 @@
 import React from 'react';
-import Header from '../components/Layout/Header';
-import Footer from '../components/Layout/Footer';
-import SettingComponent from '../components/Settings/SettingsComponent';
+import Header from '../components/layout/Header';
+import Footer from '../components/layout/Footer';
+import SettingComponent from '../components/settings/SettingsComponent';
 
 const Settings = () => {
   return (

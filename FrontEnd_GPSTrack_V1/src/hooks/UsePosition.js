@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { addPosition } from '../feature/groupMembersSlice';
-import { setPosition } from '../feature/userPositionsSlice';
+import { addPosition } from '../feature/group/groupSingleMembersSlice';
+import { setPosition } from '../feature/position/positionsSlice';
 import { getLastPosition } from '../services/PositionsApi';
 import { isEmpty } from '../utils/Utils';
 

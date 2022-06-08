@@ -1,9 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { dateParser } from '../../utils/Utils';
-
-import GroupCardMaterial from '../../UI/Group/GroupCardMaterial';
-import AppAvatar from '../../UI/Group/AppAvatar';
+import GroupCardMaterial from '../../ui/group/GroupCardMaterial';
+import AppAvatar from '../../ui/group/AppAvatar';
 
 const GroupCard = ({ group }) => {
   const navigate = useNavigate();

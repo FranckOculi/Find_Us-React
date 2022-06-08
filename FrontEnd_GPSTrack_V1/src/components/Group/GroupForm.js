@@ -2,8 +2,8 @@ import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserInfos from '../../hooks/UserInfos';
 import UseGroups from '../../hooks/UseGroups';
-import GroupFormMaterial from '../../UI/Group/GroupFormMaterial';
-import InputGroup from '../../UI/Group/InputGroup';
+import GroupFormMaterial from '../../ui/group/GroupFormMaterial';
+import InputGroup from '../../ui/group/InputGroup';
 
 const GroupForm = () => {
   const [formData, setFormData] = useState({

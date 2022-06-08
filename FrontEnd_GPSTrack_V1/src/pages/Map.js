@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { MapContainer, Marker, TileLayer, Popup } from 'react-leaflet';
-import Loader from '../components/Other/Loader';
+import Loader from '../components/other/Loader';
 import { isEmpty } from '../utils/Utils';
 import UsePosition from '../hooks/UsePosition';
 import UseGroups from '../hooks/UseGroups';
 import UserInfos from '../hooks/UserInfos';
-import Header from '../components/Layout/Header';
-import Footer from '../components/Layout/Footer';
-import CardGroup from '../components/Map/CardGroup';
-import MapComponent from '../components/Map/MapComponent';
+import Header from '../components/layout/Header';
+import Footer from '../components/layout/Footer';
+import CardGroup from '../components/map/CardGroup';
+import MapComponent from '../components/map/MapComponent';
 
 const Map = () => {
   const [isLoad, setIsLoad] = useState(false);

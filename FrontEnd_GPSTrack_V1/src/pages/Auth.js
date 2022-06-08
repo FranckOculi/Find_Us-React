@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from 'react';
-import Header from '../components/Layout/Header';
-import SignIn from '../components/Auth/SignIn';
-import SignUp from '../components/Auth/SignUp';
+import Header from '../components/layout/Header';
+import SignIn from '../components/auth/SignIn';
+import SignUp from '../components/auth/SignUp';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 

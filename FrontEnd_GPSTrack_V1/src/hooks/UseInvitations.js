@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { setInvitations } from '../feature/userInvitationsSlice';
+import { setInvitations } from '../feature/group/groupInvitationsSlice';
 // import { getAllInvitations } from '../services/EventApi';
 import { isEmpty } from '../utils/Utils';
 

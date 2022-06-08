@@ -1,26 +1,25 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { setIsAuth, setIsTuto } from '../feature/useAuthSlice';
-
 import { useNavigate } from 'react-router-dom';
-import Token from '../services/Token';
+import { setIsAuth, setIsTuto } from '../feature/user/userAuthSlice';
+import { setId } from '../feature/user/userIdSlice';
+import { clearInfos } from '../feature/user/userInfosSlice';
+import { clearGroupStore } from '../feature/group/groupsSlice';
+import { removeMemberStore } from '../feature/group/groupSingleMembersSlice';
+import { clearAllMembers } from '../feature/group/groupsMembersSlice';
+import { setPosition } from '../feature/position/positionsSlice';
+import { clearFriends } from '../feature/friends/userFriendsSlice';
+import UserInfos from './UserInfos';
+import UseGroups from './UseGroups';
+import UseFriends from './UseFriends';
 import { signInApi, signUpApi } from '../services/AuthApi';
 import { getMe } from '../services/UserApi';
-import { setId } from '../feature/userIdSlice';
-import { clearInfos } from '../feature/userInfosSlice';
-import { clearGroupStore } from '../feature/userGroupsSlice';
-import { clearFriends } from '../feature/userFriendsSlice';
-import { setPosition } from '../feature/userPositionsSlice';
-import { removeMemberStore } from '../feature/groupMembersSlice';
-import { clearAllMembers } from '../feature/allMembersSlice';
-import UserInfos from '../hooks/UserInfos';
-import UseGroups from '../hooks/UseGroups';
-import UseFriends from './UseFriends';
+import Token from '../services/Token';
 
-export default function UseAuth() {
+export default function UserAuth() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isAuth = useSelector((state) => state.useAuth.isAuth);
-  const isTuto = useSelector((state) => state.useAuth.isTuto);
+  const isAuth = useSelector((state) => state.userAuth.isAuth);
+  const isTuto = useSelector((state) => state.userAuth.isTuto);
   const { userId, loadUser } = UserInfos();
   const { loadGroupsData } = UseGroups();
   const { loadFriendsId } = UseFriends();

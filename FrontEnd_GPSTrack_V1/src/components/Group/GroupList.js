@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 
 import UseGroups from '../../hooks/UseGroups';
 import GroupCard from './GroupCard';
-import GroupListMaterial from '../../UI/Group/GroupListMaterial';
+import GroupListMaterial from '../../ui/group/GroupListMaterial';
 import { dateParser } from '../../utils/Utils';
-import Loader from '../Other/Loader';
+import Loader from '../other/Loader';
 
 const GroupList = () => {
   const [isLoad, setIsLoad] = useState(false);

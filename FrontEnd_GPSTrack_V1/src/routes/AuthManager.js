@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { tryToConnect } from '../services/AuthApi';
-import Token from '../services/Token';
+import Auth from '../pages/Auth';
+
+import Loader from '../components/other/Loader';
 import UseAuth from '../hooks/UseAuth';
 import UserInfos from '../hooks/UserInfos';
-import Auth from '../pages/Auth';
-import Loader from '../components/Other/Loader';
+import { tryToConnect } from '../services/AuthApi';
+import Token from '../services/Token';
 import { isEmpty } from '../utils/Utils';
 
 const AuthManager = () => {

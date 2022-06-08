@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { setTheme } from '../feature/themeSlice';
+import { setTheme } from '../feature/other/themeSlice';
 
 const UseTheme = () => {
   const dispatch = useDispatch();

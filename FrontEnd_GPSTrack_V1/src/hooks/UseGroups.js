@@ -1,20 +1,19 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setGroup, removeGroupStore } from '../feature/userGroupsSlice';
+import { setGroup, removeGroupStore } from '../feature/group/groupsSlice';
+import {
+  addMember,
+  removeMemberStore,
+  reloadMemberStore,
+} from '../feature/group/groupSingleMembersSlice';
+import { addAllMembers } from '../feature/group/groupsMembersSlice';
 import {
   getGroups,
   addGroup,
   deleteGroup,
   getMembers,
-  getAllMembers,
   addGroupMember,
 } from '../services/GroupApi';
-import {
-  addMember,
-  removeMemberStore,
-  reloadMemberStore,
-} from '../feature/groupMembersSlice';
-import { addAllMembers } from '../feature/allMembersSlice';
 import _ from 'lodash';
 
 export default function UseGroups() {
@@ -27,9 +26,10 @@ export default function UseGroups() {
   const loadGroupsData = async (userId, data) => {
     const eachGroupCode = [];
     for (let i = 0; i < data.length; i++) {
-      eachGroupCode[i] = data[i].groupeCode;
+      eachGroupCode.push(data[i].groupeCode);
     }
     return getGroups(userId, eachGroupCode).then((res) => {
+      console.log(res);
       if (res?.data?.userGroups) {
         let i = 0;
         do {
@@ -69,29 +69,6 @@ export default function UseGroups() {
   };
 
   /*  Members  */
-  const loadAllMembers = async (id, data) => {
-    let finalData = [];
-    if (data) {
-      for (let i = 0; i < data.length; i++) {
-        finalData.push(data[i].codeGroupe);
-      }
-      return await getAllMembers(id, finalData).then((res) => {
-        console.log(res);
-        if (!res.err) {
-          for (let i = 0; i < finalData.length; i++) {
-            for (let j = 0; j < res.data.members.length; j++) {
-              if (res.data.members[j].groupeCode === finalData[i]) {
-                // dispatch(addAllMembers(res.data.members[j]));
-              }
-            }
-          }
-          return;
-        }
-      });
-    }
-    return;
-  };
-
   const findMember = async (id, code) => {
     return await getMembers(id, code).then((res) => {
       if (res.data.members) {
@@ -141,7 +118,7 @@ export default function UseGroups() {
     createGroup,
     removeGroup,
     removeMember,
-    loadAllMembers,
+    // loadAllMembers,
     allMembersData,
     addMemberToGroup,
     reloadMember,

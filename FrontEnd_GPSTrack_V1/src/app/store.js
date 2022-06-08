@@ -1,29 +1,27 @@
 import { configureStore } from '@reduxjs/toolkit';
-import userIdReducer from '../feature/userIdSlice';
-import userInfosReducer from '../feature/userInfosSlice';
-import userGroupsReducer from '../feature/userGroupsSlice';
-import userFriendsReducer from '../feature/userFriendsSlice';
-import userPositionsReducer from '../feature/userPositionsSlice';
-import useAuthReducer from '../feature/useAuthSlice';
-import currentEventsReducer from '../feature/currentEventsSlice';
-import groupMembersReducer from '../feature/groupMembersSlice';
-import userInvitationsReducer from '../feature/userInvitationsSlice';
-import allMembersReducer from '../feature/allMembersSlice';
-import friendsReducer from '../feature/friendsSlice';
-import themeReducer from '../feature/themeSlice';
+import userAuthReducer from '../feature/user/userAuthSlice';
+import userIdReducer from '../feature/user/userIdSlice';
+import userInfosReducer from '../feature/user/userInfosSlice';
+import userGroupsReducer from '../feature/group/groupsSlice';
+import groupSingleMembersReducer from '../feature/group/groupSingleMembersSlice';
+import userGroupInvitationsReducer from '../feature/group/groupInvitationsSlice';
+import userGroupMembersReducer from '../feature/group/groupsMembersSlice';
+import positionsReducer from '../feature/position/positionsSlice';
+import userFriendsReducer from '../feature/friends/userFriendsSlice';
+import friendsReducer from '../feature/friends/friendsSlice';
+import themeReducer from '../feature/other/themeSlice';
 
 export default configureStore({
   reducer: {
+    userAuth: userAuthReducer,
     userId: userIdReducer,
     userInfos: userInfosReducer,
     userGroups: userGroupsReducer,
+    userGroupMembers: userGroupMembersReducer,
+    groupSingleMembers: groupSingleMembersReducer,
+    userGroupInvitations: userGroupInvitationsReducer,
+    positions: positionsReducer,
     userFriends: userFriendsReducer,
-    userPositions: userPositionsReducer,
-    useAuth: useAuthReducer,
-    currentEvents: currentEventsReducer,
-    groupMembers: groupMembersReducer,
-    userInvitations: userInvitationsReducer,
-    allMembers: allMembersReducer,
     friends: friendsReducer,
     theme: themeReducer,
   },

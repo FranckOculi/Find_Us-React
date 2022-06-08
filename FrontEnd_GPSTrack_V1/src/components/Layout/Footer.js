@@ -1,7 +1,6 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-
-import LayoutMaterial from '../../UI/Layout/LayoutMaterial';
+import LayoutMaterial from '../../ui/layout/LayoutMaterial';
 
 const Footer = () => {
   const location = useLocation();

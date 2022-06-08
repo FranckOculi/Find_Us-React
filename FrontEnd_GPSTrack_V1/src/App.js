@@ -1,13 +1,12 @@
 import React from 'react';
 import { BrowserRouter, Navigate, Routes, Route } from 'react-router-dom';
+import RoutesManager from './routes/RoutesManager';
+import AuthManager from './routes/AuthManager';
 import Home from './pages/Home';
 import Map from './pages/Map';
 import Settings from './pages/Settings';
-
-import RoutesManager from './routes/RoutesManager';
-import AuthManager from './routes/AuthManager';
-import GroupSingle from './components/Group/GroupSingle';
-import GroupForm from './components/Group/GroupForm';
+import GroupSingle from './components/group/GroupSingle';
+import GroupForm from './components/group/GroupForm';
 
 function App() {
   return (

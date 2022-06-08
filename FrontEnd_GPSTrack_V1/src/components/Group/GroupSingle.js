@@ -3,10 +3,10 @@ import { useParams, useNavigate } from 'react-router-dom';
 import UseGroups from '../../hooks/UseGroups';
 import UserInfos from '../../hooks/UserInfos';
 import { dateParser } from '../../utils/Utils';
-import Loader from '../Other/Loader';
-import FriendsSearch from '../Friend/FriendsSearch';
-import GroupSingleMaterial from '../../UI/Group/GroupSingleMaterial';
-import AppAvatar from '../../UI/Group/AppAvatar';
+import Loader from '../other/Loader';
+import FriendsSearch from '../friend/FriendsSearch';
+import GroupSingleMaterial from '../../ui/group/GroupSingleMaterial';
+import AppAvatar from '../../ui/group/AppAvatar';
 
 const GroupSingle = () => {
   const navigate = useNavigate();

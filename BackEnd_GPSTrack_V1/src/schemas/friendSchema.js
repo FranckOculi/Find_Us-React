@@ -17,6 +17,15 @@ const paramsJsonSchemaAdd = {
   },
 };
 
+const paramsJsonSchemaGet = {
+  type: 'object',
+  required: ['id', 'friendsId'],
+  properties: {
+    id: { type: 'number' },
+    friendsId: { type: 'string' },
+  },
+};
+
 export const getAllFriendsSchema = {
   params: paramsJsonSchemaAll,
 };
@@ -24,3 +33,7 @@ export const getAllFriendsSchema = {
 export const addFriendSchema = fastJson({
   params: paramsJsonSchemaAdd,
 });
+
+export const getFriendsSchema = {
+  params: paramsJsonSchemaGet,
+};

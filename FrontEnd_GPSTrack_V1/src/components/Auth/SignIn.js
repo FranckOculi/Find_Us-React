@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
 
 import UseAuth from '../../hooks/UseAuth';
-import AuthMaterial from '../../UI/Auth/AuthMaterial';
-import Input from '../../UI/Auth/InputAuth';
+import AuthMaterial from '../../ui/auth/AuthMaterial';
+import Input from '../../ui/auth/InputAuth';
 
 const SignIn = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });

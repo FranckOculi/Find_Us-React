@@ -1,7 +1,7 @@
 import React from 'react';
-import Header from '../components/Layout/Header';
-import Footer from '../components/Layout/Footer';
-import GroupList from '../components/Group/GroupList';
+import Header from '../components/layout/Header';
+import Footer from '../components/layout/Footer';
+import GroupList from '../components/group/GroupList';
 
 const Home = () => {
   return (

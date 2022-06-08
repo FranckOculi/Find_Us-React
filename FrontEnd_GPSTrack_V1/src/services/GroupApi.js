@@ -4,13 +4,12 @@ import Token from './Token';
 /*  Groups  */
 export const getGroups = async (id, data) => {
   return await axios({
-    method: 'POST',
-    url: `http://localhost:3000/group/${id}/groups`,
+    method: 'GET',
+    url: `http://localhost:3000/group/${id}/${data}/groups`,
     withCredentials: true,
     headers: {
       authorization: Token.getToken(),
     },
-    data,
   });
 };
 
@@ -30,6 +29,7 @@ export const deleteGroup = async (id, codeGroup) => {
   return await axios({
     method: 'DELETE',
     url: `http://localhost:3000/group/${id}/${codeGroup}/delete`,
+    withCredentials: true,
     headers: {
       authorization: Token.getToken(),
     },
@@ -37,22 +37,14 @@ export const deleteGroup = async (id, codeGroup) => {
 };
 
 /*  Members  */
-export const getAllMembers = async (id, data) => {
-  return await axios({
-    method: 'POST',
-    url: `http://localhost:3000/group/${id}/members`,
-    headers: {
-      authorization: Token.getToken(),
-    },
-    data,
-  });
-};
-
 export const getMembers = async (id, codeGroup) => {
   return await axios({
     method: 'GET',
     url: `http://localhost:3000/group/${id}/${codeGroup}/members`,
     withCredentials: true,
+    headers: {
+      authorization: Token.getToken(),
+    },
   });
 };
 

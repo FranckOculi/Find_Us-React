@@ -34,11 +34,13 @@ export const addFriend = async (id, friendId) => {
   });
 };
 
-export const getFriendsData = async (data, id) => {
+export const getFriendsData = async (id, data) => {
   return await axios({
-    method: 'POST',
-    url: `http://localhost:3000/friend/${id}/friendsData`,
+    method: 'GET',
+    url: `http://localhost:3000/friend/${id}/${data}/friendsData`,
     withCredentials: true,
-    data,
+    headers: {
+      authorization: Token.getToken(),
+    },
   });
 };

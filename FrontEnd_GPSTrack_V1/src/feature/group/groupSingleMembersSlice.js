@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export const groupMembersSlice = createSlice({
-  name: 'groupMembers',
+export const groupSingleMembersSlice = createSlice({
+  name: 'groupSingleMember',
   initialState: [],
 
   reducers: {
@@ -23,5 +23,5 @@ export const groupMembersSlice = createSlice({
 });
 
 export const { addMember, addPosition, removeMemberStore, reloadMemberStore } =
-  groupMembersSlice.actions;
-export default groupMembersSlice.reducer;
+  groupSingleMembersSlice.actions;
+export default groupSingleMembersSlice.reducer;

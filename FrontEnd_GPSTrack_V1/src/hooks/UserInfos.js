@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
+import { setInfos } from '../feature/user/userInfosSlice';
+import { setId } from '../feature/user/userIdSlice';
 import { getUserInfo, getMe } from '../services/UserApi';
-import { setInfos } from '../feature/userInfosSlice';
-import { setId } from '../feature/userIdSlice';
 
 export default function UserInfos() {
   const dispatch = useDispatch();

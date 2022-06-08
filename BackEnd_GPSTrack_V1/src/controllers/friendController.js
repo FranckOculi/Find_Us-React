@@ -31,18 +31,23 @@ export async function addFriend(req, res) {
 }
 
 export async function getFriendsData(req, res) {
-  const friendsData = await dbServer
-    .select(
-      'utilisateurId',
-      'pseudo',
-      'prenom',
-      'numeroTelephone',
-      'statusTracking',
-    )
-    .from('Utilisateurs')
-    .whereIn('utilisateurId', req.body);
-  return res.code(200).send({
-    message: 'All friends data',
-    friendsData: friendsData,
-  });
+  if (req.headers.tokenInfo.authorization == req.params.id) {
+    const friendsId = req.params.friendsId.split(',');
+    const friendsData = await dbServer
+      .select(
+        'utilisateurId',
+        'pseudo',
+        'prenom',
+        'numeroTelephone',
+        'statusTracking',
+      )
+      .from('Utilisateurs')
+      .whereIn('utilisateurId', friendsId);
+    return res.code(200).send({
+      message: 'All friends data',
+      friendsData: friendsData,
+    });
+  } else {
+    return res.code(401).send({ message: 'Token required' });
+  }
 }

@@ -16,63 +16,58 @@ import {
   deleteGroupSchema,
   updateGroupSchema,
   getGroupsSchema,
+  addMemberSchema,
 } from '../schemas/groupSchema.js';
 import { tokenVerification } from '../middleware/authMiddleware.js';
 
 async function groupRoutes(fastify, options, done) {
+  /* groups */
   fastify.route({
-    method: 'POST',
-    url: '/:id/groups',
+    method: 'GET',
+    url: '/:id/:codeGroup/groups',
     schema: getGroupsSchema,
     preHandler: tokenVerification,
     handler: getAllGroups,
   });
 
   fastify.route({
-    method: 'GET',
-    url: '/:id/:codeGroup/members',
-    // schema: getGroupsSchema,
-    // preHandler: tokenVerification,
-    handler: getMembers,
-  });
-
-  fastify.route({
     method: 'POST',
     url: '/:id/group',
-    // schema: addEventSchema,
+    schema: addGroupSchema,
     preHandler: tokenVerification,
     handler: addGroup,
   });
 
   fastify.route({
-    method: 'POST',
-    url: '/:id/members',
-    // schema: addEventSchema,
-    // preHandler: tokenVerification,
-    handler: getAllMembers,
-  });
-
-  fastify.route({
     method: 'DELETE',
     url: '/:id/:codeGroup/delete',
-    // schema: deleteEventSchema,
-    // preHandler: tokenVerification,
+    schema: deleteGroupSchema,
+    preHandler: tokenVerification,
     handler: deleteGroup,
   });
 
   fastify.route({
     method: 'PUT',
     url: '/:id/:codeGroup/update',
-    // schema: addEventSchema,
-    // preHandler: tokenVerification,
+    // schema: editGroupSchema,
+    preHandler: tokenVerification,
     handler: updateGroup,
+  });
+
+  /* members */
+  fastify.route({
+    method: 'GET',
+    url: '/:id/:codeGroup/members',
+    schema: getGroupsSchema,
+    preHandler: tokenVerification,
+    handler: getMembers,
   });
 
   fastify.route({
     method: 'POST',
     url: '/:id/:codeGroup/member',
-    // schema: addEventSchema,
-    // preHandler: tokenVerification,
+    schema: addMemberSchema,
+    preHandler: tokenVerification,
     handler: addMember,
   });
 

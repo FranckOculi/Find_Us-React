@@ -1,6 +1,6 @@
 import React from 'react';
-import Logo from '../Other/Logo';
-import LayoutMaterial from '../../UI/Layout/LayoutMaterial';
+import Logo from '../other/Logo';
+import LayoutMaterial from '../../ui/layout/LayoutMaterial';
 
 const Header = () => {
   const { HeaderPaper } = LayoutMaterial();

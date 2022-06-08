@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import SettingsMaterial from '../../UI/Settings/SettingsMaterial';
+import Loader from '../other/Loader';
 import UserInfos from '../../hooks/UserInfos';
-import AppAvatar from '../../UI/Group/AppAvatar';
+import UseAuth from '../../hooks/UseAuth';
+import AppAvatar from '../../ui/group/AppAvatar';
+import SettingsMaterial from '../../ui/settings/SettingsMaterial';
 import { deleteUser } from '../../services/UserApi';
 import Token from '../../services/Token';
-import UseAuth from '../../hooks/UseAuth';
-import Loader from '../Other/Loader';
 
 const SettingsComponent = () => {
   const navigate = useNavigate();

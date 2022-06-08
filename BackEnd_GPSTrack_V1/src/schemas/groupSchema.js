@@ -14,6 +14,15 @@ const bodyJsonSchema = {
   },
 };
 
+const paramsJsonGroupsSchema = {
+  type: 'object',
+  required: ['id', 'codeGroup'],
+  properties: {
+    id: { type: 'number' },
+    codeGroup: { type: 'string' },
+  },
+};
+
 const paramsJsonSchema = {
   type: 'object',
   required: ['id'],
@@ -31,23 +40,13 @@ const paramsJsonSchemaDelete = {
   },
 };
 
-const paramsJsonSchemaAdd = {
-  type: 'object',
-  required: ['id', 'codeEvent', 'friendId'],
-  properties: {
-    id: { type: 'number' },
-    codeEvent: { type: 'string', minLength: 8, maxLength: 8 },
-    friendId: { type: 'string' },
-  },
-};
-
 const bodyGroup = {
   type: 'array',
   group: { type: 'string' },
 };
 
 export const getGroupsSchema = {
-  body: bodyGroup,
+  params: paramsJsonGroupsSchema,
 };
 
 export const addGroupSchema = fastJson({
@@ -60,5 +59,9 @@ export const deleteGroupSchema = {
 };
 
 export const updateGroupSchema = {
-  params: paramsJsonSchemaAdd,
+  // params: paramsJsonSchemaAdd,
 };
+
+export const addMemberSchema = fastJson({
+  params: paramsJsonGroupsSchema,
+});

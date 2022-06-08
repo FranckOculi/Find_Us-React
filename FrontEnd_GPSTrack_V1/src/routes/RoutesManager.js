@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Outlet } from 'react-router-dom';
-import Loader from '../components/Other/Loader';
-import { tryToConnect } from '../services/AuthApi';
+import Tuto from '../pages/Tuto';
+import Loader from '../components/other/Loader';
 import UseAuth from '../hooks/UseAuth';
 import UserInfos from '../hooks/UserInfos';
+import { tryToConnect } from '../services/AuthApi';
 import Token from '../services/Token';
 import { isEmpty } from '../utils/Utils';
-import Tuto from '../pages/Tuto';
 
 const RoutesManager = () => {
   const navigate = useNavigate();

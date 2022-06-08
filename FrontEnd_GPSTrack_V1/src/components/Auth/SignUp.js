@@ -2,8 +2,8 @@ import React, { useState, useRef } from 'react';
 
 import { isStrongPassword } from 'validator';
 import UseAuth from '../../hooks/UseAuth';
-import AuthMaterial from '../../UI/Auth/AuthMaterial';
-import Input from '../../UI/Auth/InputAuth';
+import AuthMaterial from '../../ui/auth/AuthMaterial';
+import Input from '../../ui/auth/InputAuth';
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
