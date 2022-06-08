@@ -1,15 +1,21 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { setFriends } from '../feature/userFriendsSlice';
-import { getAllFriends, addFriend } from '../services/FriendApi';
+import { setFriendsData } from '../feature/friendsSlice';
+import {
+  getAllFriends,
+  addFriend,
+  getFriendsData,
+} from '../services/FriendApi';
 import { getShortUserInfo } from '../services/UserApi';
 import { isEmpty } from '../utils/Utils';
 
 export default function UseFriends() {
   const dispatch = useDispatch();
-  const friendsData = useSelector((state) => state.userFriends);
+  const friendsId = useSelector((state) => state.userFriends);
+  const friendsData = useSelector((state) => state.friends);
 
   //Load All friendsId
-  const loadFriendsData = async (data) => {
+  const loadFriendsId = async (data) => {
     let i = 0;
     do {
       dispatch(setFriends(data[i].recepteurUserId));
@@ -28,18 +34,30 @@ export default function UseFriends() {
     // return friendsId;
   };
 
-  //Load All friends firstName
-  const loadFriendsNameData = async (friendsId) => {
-    if (!isEmpty(friendsId)) {
-      let i = 0;
-      do {
-        getShortUserInfo(friendsId[i]).then((res) => {
-          dispatch(setFriends(res.data.shortUserInfo[0]));
-        });
-        i++;
-      } while (i < friendsId.length);
-    }
+  const loadFriendsData = async (data, id) => {
+    return await getFriendsData(data, id).then((res) => {
+      if (res?.data?.friendsData) {
+        let i = 0;
+        do {
+          dispatch(setFriendsData(res.data.friendsData[i]));
+          i++;
+        } while (i < res.data.friendsData.length);
+      }
+    });
   };
+
+  //Load All friends firstName
+  // const loadFriendsNameData = async (friendsId) => {
+  //   if (!isEmpty(friendsId)) {
+  //     let i = 0;
+  //     do {
+  //       getShortUserInfo(friendsId[i]).then((res) => {
+  //         dispatch(setFriends(res.data.shortUserInfo[0]));
+  //       });
+  //       i++;
+  //     } while (i < friendsId.length);
+  //   }
+  // };
 
   //fetch friend firstName
   const fetchNameMember = async (id) => {
@@ -55,11 +73,12 @@ export default function UseFriends() {
   };
 
   return {
-    friendsData,
+    friendsId,
     loadFriendsData,
-    loadFriendsNameData,
+    loadFriendsId,
     addNewFriend,
     fetchShortFriendInfo,
     fetchNameMember,
+    friendsData,
   };
 }

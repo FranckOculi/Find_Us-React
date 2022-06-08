@@ -16,12 +16,12 @@ export const groupMembersSlice = createSlice({
         membre.position = payload[1];
       }
     },
-    eraseMember: (state, { payload }) => {
+    removeMemberStore: (state, { payload }) => {
       return state.filter(({ codeGroupe }) => codeGroupe === payload);
     },
   },
 });
 
-export const { addMember, addPosition, eraseMember } =
+export const { addMember, addPosition, removeMemberStore, reloadMemberStore } =
   groupMembersSlice.actions;
 export default groupMembersSlice.reducer;

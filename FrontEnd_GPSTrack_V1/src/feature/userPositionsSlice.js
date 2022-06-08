@@ -11,6 +11,11 @@ export const userPositionsSlice = createSlice({
       state.latitude = payload.latitude;
       state.longitude = payload.longitude;
     },
+    clearPosition: (state, { payload }) => {
+      if (state.latitude === null && state.longitude === null) return;
+      state.latitude = null;
+      state.longitude = null;
+    },
   },
 });
 

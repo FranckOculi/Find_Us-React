@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Navigate, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
-import Inviting from './pages/Inviting';
 import Map from './pages/Map';
 import Settings from './pages/Settings';
 
@@ -29,7 +28,6 @@ function App() {
               element={<GroupSingle />}
             /> */}
             <Route path='/map' element={<Map />} />
-            <Route path='/inviting' element={<Inviting />} />
             <Route path='/settings' element={<Settings />} />
             <Route path='/home' element={<Navigate to='/' />} />
           </Route>

@@ -5,7 +5,9 @@
   height: 667px;
   width: 375px;
   margin: 0;
+  color: rgba(0, 0, 0, 0.87);
 }
+
 .settingsContainer {
   display: flex;
   flex-direction: column;
@@ -13,5 +15,17 @@
   width: 355px;
   height: 551px;
   margin: 10px;
-  background-color: rgb(245, 248, 248);
+  margin-top: 15px;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+#settings-title {
+  color: rgba(26, 25, 25, 0.87);
+}
+#logout {
+  color: rgba(0, 0, 0, 0.87);
+  text-decoration: none;
+}
+#logout:hover {
+  color: #1976d2;
 }

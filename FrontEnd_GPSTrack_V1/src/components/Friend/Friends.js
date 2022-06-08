@@ -8,8 +8,8 @@ const Friends = () => {
   const { friendsData, loadFriendsData, loadFriendsNameData } = UseFriends();
   const { userData } = UserInfos();
 
-  const handleLoadFriendsData = async () => {
-    await loadFriendsData(userData.utilisateurId).then((res) =>
+  const handleLoadFriendsData = () => {
+    return loadFriendsData(userData.utilisateurId).then((res) =>
       loadFriendsNameData(res),
     );
   };

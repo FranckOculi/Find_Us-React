@@ -11,8 +11,12 @@ export const userGroupsSlice = createSlice({
     removeGroupStore: (state, { payload }) => {
       return state.filter(({ codeGroupe }) => codeGroupe !== payload);
     },
+    clearGroupStore: (state, { payload }) => {
+      return state.filter(({ codeGroupe }) => codeGroupe === payload);
+    },
   },
 });
 
-export const { setGroup, removeGroupStore } = userGroupsSlice.actions;
+export const { setGroup, removeGroupStore, clearGroupStore } =
+  userGroupsSlice.actions;
 export default userGroupsSlice.reducer;

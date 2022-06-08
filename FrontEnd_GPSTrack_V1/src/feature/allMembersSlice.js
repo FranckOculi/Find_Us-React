@@ -2,21 +2,21 @@ import { createSlice } from '@reduxjs/toolkit';
 
 export const allMembersSlice = createSlice({
   name: 'allMembers',
-  initialState: [],
+  initialState: { groupes: null },
 
   reducers: {
     addAllMembers: (state, { payload }) => {
-      console.log(payload);
-      if (!state[0]) {
-        state.push(payload);
+      state.groupes = payload;
+    },
+    clearAllMembers: (state, { payload }) => {
+      if (state.groupes === null) return;
+      for (let i = 0; i < state.groupes.length; i++) {
+        state.groupes[i] = null;
       }
-      if (state[0]) {
-        const nex = state.filter(({ groupeCode }) => groupeCode !== payload);
-        state.push(nex);
-      }
+      // state.groupes = null;
     },
   },
 });
 
-export const { addAllMembers } = allMembersSlice.actions;
+export const { addAllMembers, clearAllMembers } = allMembersSlice.actions;
 export default allMembersSlice.reducer;

@@ -33,3 +33,12 @@ export const addFriend = async (id, friendId) => {
     },
   });
 };
+
+export const getFriendsData = async (data, id) => {
+  return await axios({
+    method: 'POST',
+    url: `http://localhost:3000/friend/${id}/friendsData`,
+    withCredentials: true,
+    data,
+  });
+};

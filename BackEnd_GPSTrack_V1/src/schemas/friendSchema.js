@@ -7,14 +7,6 @@ const paramsJsonSchemaAll = {
     id: { type: 'number' },
   },
 };
-const paramsJsonSchemaEvent = {
-  type: 'object',
-  required: ['id', 'codeEvent'],
-  properties: {
-    id: { type: 'number' },
-    codeEvent: { type: 'string', minLength: 8, maxLength: 8 },
-  },
-};
 
 const paramsJsonSchemaAdd = {
   type: 'object',
@@ -27,10 +19,6 @@ const paramsJsonSchemaAdd = {
 
 export const getAllFriendsSchema = {
   params: paramsJsonSchemaAll,
-};
-
-export const getFriendsEventSchema = {
-  params: paramsJsonSchemaEvent,
 };
 
 export const addFriendSchema = fastJson({

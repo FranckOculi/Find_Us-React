@@ -5,7 +5,7 @@ import cors from 'fastify-cors';
 import authRoutes from './src/routes/authRoutes.js';
 import userRoutes from './src/routes/userRoutes.js';
 import positionRoutes from './src/routes/positionRoutes.js';
-import eventRoutes from './src/routes/eventRoutes.js';
+import groupRoutes from './src/routes/groupRoutes.js';
 import friendRoutes from './src/routes/friendRoutes.js';
 
 const app = fastify({
@@ -37,7 +37,7 @@ app.register(cookie, {
 app.register(authRoutes, { prefix: '/auth' });
 app.register(userRoutes, { prefix: '/user' });
 app.register(positionRoutes, { prefix: '/position' });
-app.register(eventRoutes, { prefix: '/event' });
+app.register(groupRoutes, { prefix: '/group' });
 app.register(friendRoutes, { prefix: '/friend' });
 
 // Run the server !

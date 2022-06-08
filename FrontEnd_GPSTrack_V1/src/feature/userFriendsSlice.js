@@ -11,8 +11,11 @@ export const userFriendsSlice = createSlice({
       state.push(payload);
       //   state.amis = action.payload.recepteurUserId;
     },
+    clearFriends: (state, { payload }) => {
+      return state.filter(({ codeGroupe }) => codeGroupe === payload);
+    },
   },
 });
 
-export const { setFriends } = userFriendsSlice.actions;
+export const { setFriends, clearFriends } = userFriendsSlice.actions;
 export default userFriendsSlice.reducer;

@@ -7,9 +7,15 @@ import {
   deleteGroup,
   getMembers,
   getAllMembers,
+  addGroupMember,
 } from '../services/GroupApi';
-import { addMember, eraseMember } from '../feature/groupMembersSlice';
+import {
+  addMember,
+  removeMemberStore,
+  reloadMemberStore,
+} from '../feature/groupMembersSlice';
 import { addAllMembers } from '../feature/allMembersSlice';
+import _ from 'lodash';
 
 export default function UseGroups() {
   const dispatch = useDispatch();
@@ -17,18 +23,26 @@ export default function UseGroups() {
   const membersData = useSelector((state) => state.groupMembers);
   const allMembersData = useSelector((state) => state.allMembers);
 
+  /*  Groups  */
   const loadGroupsData = async (userId, data) => {
-    const sortedData = [];
+    const eachGroupCode = [];
     for (let i = 0; i < data.length; i++) {
-      sortedData[i] = data[i].groupeCode;
+      eachGroupCode[i] = data[i].groupeCode;
     }
-    return getGroups(userId, sortedData).then((res) => {
+    return getGroups(userId, eachGroupCode).then((res) => {
       if (res?.data?.userGroups) {
         let i = 0;
         do {
           dispatch(setGroup(res.data.userGroups[i]));
           i++;
         } while (i < res.data.userGroups.length);
+      }
+      if (res?.data?.membresData) {
+        const data = res.data.membresData.sort(function (a, b) {
+          return a.groupeCode.toString().localeCompare(b.groupeCode.toString());
+        });
+        const sortedMember = _.groupBy(data, 'groupeCode');
+        dispatch(addAllMembers(sortedMember));
       }
     });
   };
@@ -40,18 +54,6 @@ export default function UseGroups() {
       }
     }
     return;
-  };
-
-  const findMember = async (id, code) => {
-    return await getMembers(id, code).then((res) => {
-      if (res.data.members) {
-        let i = 0;
-        do {
-          dispatch(addMember(res.data.members[i]));
-          i++;
-        } while (i < res.data.members.length);
-      }
-    });
   };
 
   const createGroup = async (id, data) => {
@@ -66,10 +68,7 @@ export default function UseGroups() {
     });
   };
 
-  const refreshMember = (id) => {
-    return dispatch(eraseMember(id));
-  };
-
+  /*  Members  */
   const loadAllMembers = async (id, data) => {
     let finalData = [];
     if (data) {
@@ -93,6 +92,46 @@ export default function UseGroups() {
     return;
   };
 
+  const findMember = async (id, code) => {
+    return await getMembers(id, code).then((res) => {
+      if (res.data.members) {
+        let i = 0;
+        do {
+          dispatch(addMember(res.data.members[i]));
+          i++;
+        } while (i < res.data.members.length);
+      }
+    });
+  };
+
+  const addMemberToGroup = async (id, codeGroup) => {
+    return await addGroupMember(id, codeGroup).then((res) => {
+      console.log(res);
+      if (!res.err) {
+        // dispatch(res);
+      }
+    });
+  };
+
+  const removeMember = () => {
+    return dispatch(removeMemberStore(0));
+  };
+
+  const reloadMember = (id, code) => {
+    dispatch(removeMemberStore(0));
+    setTimeout(async () => {
+      return await getMembers(id, code).then((res) => {
+        if (res.data.members) {
+          let i = 0;
+          do {
+            dispatch(addMember(res.data.members[i]));
+            i++;
+          } while (i < res.data.members.length);
+        }
+      });
+    }, 500);
+  };
+
   return {
     groupsData,
     loadGroupsData,
@@ -101,8 +140,10 @@ export default function UseGroups() {
     membersData,
     createGroup,
     removeGroup,
-    refreshMember,
+    removeMember,
     loadAllMembers,
     allMembersData,
+    addMemberToGroup,
+    reloadMember,
   };
 }

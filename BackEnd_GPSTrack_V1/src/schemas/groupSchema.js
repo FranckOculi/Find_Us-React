@@ -50,19 +50,15 @@ export const getGroupsSchema = {
   body: bodyGroup,
 };
 
-export const addEventSchema = fastJson({
+export const addGroupSchema = fastJson({
   body: bodyJsonSchema,
   params: paramsJsonSchema,
 });
 
-export const getEventsSchema = {
-  params: paramsJsonSchema,
-};
-
-export const deleteEventSchema = {
+export const deleteGroupSchema = {
   params: paramsJsonSchemaDelete,
 };
 
-export const updateEventSchema = {
+export const updateGroupSchema = {
   params: paramsJsonSchemaAdd,
 };

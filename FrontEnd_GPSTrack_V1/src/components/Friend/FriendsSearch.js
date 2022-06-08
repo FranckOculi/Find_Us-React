@@ -3,26 +3,15 @@ import UseFriends from '../../hooks/UseFriends';
 import Loader from '../Other/Loader';
 import { isEmpty } from '../../utils/Utils';
 
-const FriendsSearch = ({
-  searchModalChange,
-  handleAddMembers,
-  eventSearchData,
-  userData,
-  handleSendInvitation,
-}) => {
-  const [isLoad, setIsLoad] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-  const { friendsData, loadFriendsData, loadFriendsNameData } = UseFriends();
+import FriendsSearchMaterial from '../../UI/Friend/FriendsSearchMaterial';
 
-  const handleSearchTerm = (e) => {
-    let value = e.target.value;
-    setSearchTerm(value);
-  };
+const FriendsSearch = ({ userData, handleAddMember, handleAddMemberModal }) => {
+  const [isLoad, setIsLoad] = useState(false);
+  const { friendsId, friendsData, loadFriendsData } = UseFriends();
+  const { InputSearch, FriendSearchBar } = FriendsSearchMaterial();
 
   const fetchFriendsData = async () => {
-    await loadFriendsData(userData.utilisateurId).then((res) =>
-      loadFriendsNameData(res),
-    );
+    return await loadFriendsData(friendsId, userData.utilisateurId);
   };
 
   useEffect(() => {
@@ -32,47 +21,25 @@ const FriendsSearch = ({
     }
   }, []);
 
-  return (
-    <>
-      {isEmpty(friendsData) && <Loader />}
-      {!isEmpty(friendsData) && (
-        <>
-          <input
-            id='searchBar'
-            type='text'
-            name='searchBar'
-            placeholder='Search friends...'
-            onChange={handleSearchTerm}
-          ></input>
-          <button id='searchBarBtnBack' onClick={searchModalChange}>
-            Back
-          </button>
-          <button id='searchBarBtnAdd' onClick={handleAddMembers}>
-            Add
-          </button>
-        </>
-      )}
-      {!isEmpty(friendsData) &&
-        friendsData
-          .filter((friend) => {
-            return friend.prenom
-              .toLowerCase()
-              .includes(searchTerm.toLowerCase());
-          })
-          .map((friend) => (
-            <div
-              className='friendsItem'
-              key={friend.utilisateurId}
-              onClick={() => {
-                eventSearchData(friend);
-                handleSendInvitation(friend.utilisateurId, friend.prenom);
-              }}
-            >
-              {friend.prenom}
-            </div>
-          ))}
-    </>
-  );
+  const handleBackToGroup = () => {
+    handleAddMemberModal();
+  };
+
+  if (friendsData) {
+    return (
+      <InputSearch
+        className='friendsSearch'
+        friendsData={friendsData}
+        label='Add friends'
+        handleAddMember={(e) => handleAddMember(e)}
+      >
+        <FriendSearchBar onClick={handleBackToGroup}>
+          Add friends
+        </FriendSearchBar>
+      </InputSearch>
+    );
+  }
+  return <Loader />;
 };
 
 export default FriendsSearch;

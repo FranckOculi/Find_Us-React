@@ -13,12 +13,6 @@ export const userInfoSlice = createSlice({
     dateCreation: null,
     statusTracking: null,
   },
-  // initialState: [],
-  // initialState: {
-  //   user: [],
-  //   friends: [],
-  //   groups: [],
-  // },
 
   reducers: {
     setInfos: (state, { payload }) => {
@@ -31,46 +25,21 @@ export const userInfoSlice = createSlice({
       state.photoProfil = payload.photoProfil;
       state.dateCreation = payload.dateCreation;
       state.statusTracking = payload.statusTracking;
-      // payload.user && (state.user = payload.user);
-      // payload.groups && (state.friends = payload.friends);
-      // payload.groups && (state.groups = payload.groups);
+    },
+
+    clearInfos: (state, { payload }) => {
+      state.utilisateurId = payload;
+      state.pseudo = payload;
+      state.prenom = payload;
+      state.nom = payload;
+      state.mail = payload;
+      state.numeroTelephone = payload;
+      state.photoProfil = payload;
+      state.dateCreation = payload;
+      state.statusTracking = payload;
     },
   },
 });
 
-export const { setInfos } = userInfoSlice.actions;
+export const { setInfos, clearInfos } = userInfoSlice.actions;
 export default userInfoSlice.reducer;
-
-// const events = {
-//   name: 'events',
-//   initialState:{
-//     recepteurUserId: null,
-//     codeEvenement: null,
-//     nomEvenement: null,
-//     duree: null,
-//     dateEvenement: null,
-//   }
-// }
-
-// const locations = {
-//   name: 'locations',
-//   initialState:{
-//     latitude: null,
-//     longitude: null,
-//     codeEvenement: null,
-//     datePosition: null,
-//   }
-// }
-
-// setUserInfo: (state, { payload }) => {
-//   state.info = payload;
-// },
-// setUserFriends: (state, { payload }) => {
-//   state.friends = payload;
-// },
-// setUserEvents: (state, { payload }) => {
-//   state.events = payload;
-// },
-// setUserLocations: (state, { payload }) => {
-//   state.locations = payload;
-// },

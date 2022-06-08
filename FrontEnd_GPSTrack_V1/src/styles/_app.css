@@ -10,7 +10,6 @@ body {
 .app {
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   align-items: center;
   cursor: default;
   height: 667px;

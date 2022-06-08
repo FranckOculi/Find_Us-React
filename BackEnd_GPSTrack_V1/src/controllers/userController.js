@@ -107,7 +107,6 @@ export async function getMe(req, res) {
     .where({
       membreId: req.params.id,
     });
-
   // const groups = await dbServer
   //     .select(
   //     'codeGroupe',

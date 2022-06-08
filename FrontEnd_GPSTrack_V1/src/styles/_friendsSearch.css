@@ -1,0 +1,40 @@
+.friendsSearch {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 150px;
+  margin-left: -150px;
+  z-index: 3;
+}
+#blur {
+  z-index: 1;
+}
+#iconSearch {
+  display: block;
+  margin: 30px auto auto auto;
+}
+#friendsTitle {
+  font-weight: 600;
+  text-align: center;
+}
+
+#inputSearch {
+  margin-top: 60px;
+  margin-left: 8px;
+}
+
+#friends-StyledTag {
+  /* margin: 30px auto auto auto; */
+}
+
+#friends-Listbox {
+  display: block;
+  margin-left: 9px;
+}
+
+#inputBtn {
+  display: block;
+  margin: 30px auto auto auto;
+}

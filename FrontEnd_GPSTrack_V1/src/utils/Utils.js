@@ -35,18 +35,8 @@ export const compareDate = (num) => {
   if (date === today) return 0;
 };
 
-// export const compareTwoDates = (num1, num2) => {
-//   const date1 = dateParser(num1);
-//   const date2 = dateParser(num2);
-//   if (date1 > date2) return 1;
-//   if (date1 < date2) return -1;
-//   if (date1 === date2) return 0;
-// };
 export const compareTwoDates = (num1, num2) => {
   const date1 = dateParser(num1);
   const date2 = dateParser(num2);
   return date1 - date2;
-  // if (date1 > date2) return 1;
-  // if (date1 < date2) return -1;
-  // if (date1 === date2) return 0;
 };

@@ -1,62 +1,6 @@
-/* 
-#signUp-input {
-  display: flex;
-  width: 250px;
-  height: 28px;
-  border-radius: 4px;
-  border: 1px solid rgb(113, 113, 113);
-  margin-top: 5px;
-  font-size: 15px;
-}
-
-#signUp-submit {
-  display: flex;
-  width: 256px;
-  height: 30px;
-  border-radius: 4px;
-  padding: 0;
-  border: 1px solid rgb(113, 113, 113);
-  margin-top: 5px;
-  font-size: 16px;
-  margin-bottom: 5px;
-  background-color: #1f69ec;
-  color: rgb(254, 249, 249);
-  font-weight: 500;
-}
-.signup-form p {
-  position: relative;
-  margin-top: 1px;
-  left: -47px;
-  display: block;
-  font-weight: 600;
-  color: rgb(59, 59, 59);
-  text-align: left;
-  font-size: 15px;
-}
-
-#inputError {
-  display: flex;
-  width: 250px;
-  height: 28px;
-  border-radius: 4px;
-  border: 1px solid rgb(203, 0, 0);
-  margin-top: 5px;
-  font-size: 15px;
-  color: red;
-} */
-
 .signUp-form .textError {
   margin-top: 5px;
-  /* margin-bottom: 5px; */
   padding-left: 3px;
   color: red;
   font-size: 14px;
 }
-
-/* .signUp-form .textSuccess {
-  margin-top: 5px;
-
-  padding-left: 3px;
-  color: green;
-  font-size: 14px;
-} */

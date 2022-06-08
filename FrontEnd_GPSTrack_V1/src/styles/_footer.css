@@ -4,27 +4,4 @@
   width: 375px;
   color: white;
   justify-content: space-between;
-  /* margin-top: 1px;
-  border-top: 1px solid lightgray; */
-}
-
-.link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 93px;
-  height: 59px;
-  border: none;
-  color: grey;
-  /* background-color: rgb(221, 219, 219);
-   */
-  background-color: white;
-  text-decoration: none;
-}
-
-#active {
-  /* background-color: #1f69ec;
-   */
-  /* background-color: white;
-  color: rgb(246, 242, 242); */
 }

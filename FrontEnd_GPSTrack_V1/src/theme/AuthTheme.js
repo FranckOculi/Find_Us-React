@@ -27,12 +27,13 @@ class AuthTheme {
       inputLabel: {
         display: 'flex',
         position: 'inherit',
-        top: 10,
+        top: 11,
         left: -11,
         margin: 0,
         padding: 0,
         justifyContent: 'flex-start',
         alignItems: 'center',
+        fontSize: 15,
       },
       components: {
         MuiButton: {

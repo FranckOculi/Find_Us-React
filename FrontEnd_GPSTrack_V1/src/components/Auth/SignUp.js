@@ -1,37 +1,44 @@
-import React, { useState } from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-// import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import React, { useState, useRef } from 'react';
 
 import { isStrongPassword } from 'validator';
 import UseAuth from '../../hooks/UseAuth';
-import AuthTheme from '../../utils/AuthTheme';
+import AuthMaterial from '../../UI/Auth/AuthMaterial';
+import Input from '../../UI/Auth/InputAuth';
 
 const SignUp = () => {
-  const theme = createTheme(AuthTheme.getTheme());
-  const [userName, setUserName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [formData, setFormData] = useState({
+    userName: '',
+    email: '',
+    password: '',
+  });
+  const userNameRef = useRef();
+  const emailRef = useRef();
+  const passwordRef = useRef();
 
   const [passwordError, setPasswordError] = useState(false);
-
   const [signUpError, setSignUpError] = useState(false);
+
   const { createAccount } = UseAuth();
+  const { AuthAvatar, PersonalTypography, SignUpButton } = AuthMaterial();
+
+  const onChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value.trim(),
+    });
+    setSignUpError(false);
+  };
 
   const handleSignUp = async (e) => {
     e.preventDefault();
 
-    if (!isStrongPassword(password)) {
+    if (!isStrongPassword(formData.password)) {
       setPasswordError(true);
-    } else if (userName && email && password) {
+    } else if (formData.userName && formData.email && formData.password) {
       const data = {
-        pseudo: userName,
-        mail: email.toLowerCase(),
-        motDePasse: password,
+        pseudo: formData.userName,
+        mail: formData.email.toLowerCase(),
+        motDePasse: formData.password,
       };
 
       return await createAccount(data).catch((err) => {
@@ -43,77 +50,41 @@ const SignUp = () => {
   return (
     <>
       <form action='signUp' onSubmit={handleSignUp} className='signUp-form'>
-        <Avatar sx={{ m: 0, bgcolor: 'secondary.main' }} id='lockOut'>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component='h2' variant='h6' id='signTitle'>
-          Sign up
-        </Typography>
+        <AuthAvatar></AuthAvatar>{' '}
+        <PersonalTypography>Sign up</PersonalTypography>
         <>
-          <ThemeProvider theme={theme}>
-            {/* <CssBaseline /> */}
-            <TextField
-              autoComplete='given-name'
-              name='userName'
-              required
-              id='firstName'
-              label='User Name'
-              value={userName}
-              inputProps={{
-                style: theme.inputTextEmail,
-              }}
-              InputLabelProps={{
-                style: theme.inputLabel,
-              }}
-              onChange={(e) => {
-                setUserName(e.target.value);
-                setSignUpError(false);
-              }}
-            />
-            <TextField
-              required
-              id='email'
-              label='Email Address'
-              name='email'
-              autoComplete='email'
-              inputProps={{
-                style: theme.inputTextEmail,
-              }}
-              InputLabelProps={{
-                style: theme.inputLabel,
-              }}
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-                setSignUpError(false);
-              }}
-            />
-            <TextField
-              required
-              name='password'
-              label='Password'
-              type='password'
-              id='password'
-              autoComplete='current-password'
-              inputProps={{
-                style: theme.inputTextPassword,
-              }}
-              InputLabelProps={{
-                style: theme.inputLabel,
-              }}
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-                setSignUpError(false);
-                setPasswordError(false);
-              }}
-            />
-            <Button type='submit' variant='contained' sx={{ mt: 3 }}>
-              Sign Up
-            </Button>
-          </ThemeProvider>
+          <Input
+            required
+            type='text'
+            id='firstName'
+            label='User Name'
+            name='userName'
+            autoComplete='given-name'
+            onChange={onChange}
+            ref={userNameRef}
+          />
+          <Input
+            required
+            type='email'
+            id='email'
+            label='Email'
+            name='email'
+            autoComplete='email'
+            onChange={onChange}
+            ref={emailRef}
+          />
+          <Input
+            required
+            type='password'
+            id='password'
+            label='Password'
+            name='password'
+            autoComplete='current-password'
+            onChange={onChange}
+            ref={passwordRef}
+          />
+          <SignUpButton>Sign Up</SignUpButton>
         </>
-
         {passwordError && (
           <div className='textError'>
             Password must contain minimum 8 characters with at least : <br />- 1

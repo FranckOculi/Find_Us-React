@@ -16,25 +16,6 @@ export async function getAllFriends(req, res) {
   }
 }
 
-export async function getFriendsEvent(req, res) {
-  if (req.headers.tokenInfo.authorization === req.params.id) {
-    const friends = await dbServer
-      .select('amiId', 'recepteurUserId')
-      .from('Amis')
-      .where({
-        emetteurUserId: req.params.id,
-        codeEvenement: req.params.codeEvent,
-      });
-
-    return res.code(200).send({
-      message: 'All friends',
-      friends: friends,
-    });
-  } else {
-    return res.code(401).send({ message: 'Error token' });
-  }
-}
-
 export async function addFriend(req, res) {
   await dbServer
     .insert([
@@ -46,5 +27,22 @@ export async function addFriend(req, res) {
     .into('Amis');
   return res.code(200).send({
     message: 'Friend added',
+  });
+}
+
+export async function getFriendsData(req, res) {
+  const friendsData = await dbServer
+    .select(
+      'utilisateurId',
+      'pseudo',
+      'prenom',
+      'numeroTelephone',
+      'statusTracking',
+    )
+    .from('Utilisateurs')
+    .whereIn('utilisateurId', req.body);
+  return res.code(200).send({
+    message: 'All friends data',
+    friendsData: friendsData,
   });
 }
