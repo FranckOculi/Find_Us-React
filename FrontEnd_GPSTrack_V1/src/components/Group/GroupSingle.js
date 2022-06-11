@@ -40,7 +40,7 @@ const GroupSingle = () => {
     UseGroups();
   const { PhotoGroup, LogoGroupDefault, PhotoMember, LogoMemberDefault } =
     AppAvatar();
-  const { addMemberToGroup, reloadMember } = UseGroups();
+  const { addMemberToGroup, reloadMember, loadSelectGroup } = UseGroups();
 
   const handleExpandDescription = () => {
     setExpandedDescription(!expandedDescription);
@@ -85,6 +85,12 @@ const GroupSingle = () => {
   const handleBackToHome = () => {
     resetMember();
     return navigate('/', { replace: true });
+  };
+
+  const handleGoToMap = () => {
+    loadSelectGroup(dataSingle.codeGroupe);
+    resetMember();
+    return navigate('/map', { replace: true });
   };
 
   useEffect(() => {
@@ -189,7 +195,9 @@ const GroupSingle = () => {
                 )}
               </CardContentMember>
             </CollapseGroupSingle>
-            <GroupSingleIcon>See on map</GroupSingleIcon>
+            <GroupSingleIcon onClick={handleGoToMap}>
+              See on map
+            </GroupSingleIcon>
           </CardSingleGroup>
         </div>
       </>

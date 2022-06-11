@@ -4,7 +4,7 @@ import CheckBoxMember from '../../ui/map/CheckBoxMember';
 import MapMaterial from '../../ui/map/MapMaterial';
 import AppAvatar from '../../ui/group/AppAvatar';
 const CardGroup = () => {
-  const { groupsData } = UseGroups();
+  const { groupsData, selectedGroup } = UseGroups();
   const { SelectGroupCard } = MapMaterial();
   const { MapPhoto, MapLogoDefault, MapPhotoMember, MapLogoMemberDefault } =
     AppAvatar();
@@ -12,16 +12,20 @@ const CardGroup = () => {
   return (
     <SelectGroupCard>
       {groupsData &&
-        groupsData.map((group) => (
-          <CheckBoxMember
-            group={group}
-            MapPhoto={MapPhoto}
-            MapLogoDefault={MapLogoDefault}
-            MapPhotoMember={MapPhotoMember}
-            MapLogoMemberDefault={MapLogoMemberDefault}
-            key={group.codeGroupe}
-          />
-        ))}
+        groupsData.map((group) => {
+          if (group.codeGroupe === selectedGroup) {
+            return (
+              <CheckBoxMember
+                group={group}
+                MapPhoto={MapPhoto}
+                MapLogoDefault={MapLogoDefault}
+                MapPhotoMember={MapPhotoMember}
+                MapLogoMemberDefault={MapLogoMemberDefault}
+                key={group.codeGroupe}
+              />
+            );
+          }
+        })}
     </SelectGroupCard>
   );
 };

@@ -51,11 +51,10 @@ export async function getAllGroups(req, res) {
         'membreId',
         'admin',
       );
-
     return res.code(200).send({
       message: 'All user groups',
       userGroups: groups,
-      membresData: membersData,
+      membersData: membersData,
     });
   } else {
     return res.code(401).send({ message: 'Error token' });

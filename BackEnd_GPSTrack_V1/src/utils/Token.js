@@ -14,7 +14,6 @@ export default class Token {
       { userId: user[0].utilisateurId },
       configuration.tokenSecret,
       this.options,
-      // this.options,
     );
     return token;
   };

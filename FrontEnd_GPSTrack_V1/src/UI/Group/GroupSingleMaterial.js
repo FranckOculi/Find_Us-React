@@ -39,6 +39,8 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 import GroupSingleTheme from '../../theme/GroupSingleTheme';
+import { Marker } from 'react-leaflet';
+import L from 'leaflet';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -284,6 +286,21 @@ const GroupSingleMaterial = () => {
   };
 
   const GroupSingleIcon = ({ onClick, children }) => {
+    const Icon = () => {
+      // const icon = require('../../img/icon/seeOnMap.png');
+      return (
+        <img
+          src='https://cdn-icons.flaticon.com/png/512/1865/premium/1865269.png?token=exp=1654938664~hmac=c283f1a0eb508536a2f284f892772158'
+          alt='icon'
+          width='50px'
+          height='50px'
+          // position='absolute'
+          // bottom='25px'
+          // right='120px'
+        ></img>
+      );
+    };
+
     return (
       <>
         <CardHeader
@@ -291,13 +308,15 @@ const GroupSingleMaterial = () => {
             <Avatar
               sx={{
                 bgcolor: 'white',
-                width: 35,
-                height: 35,
-                mt: -3,
+                position: 'absolute',
+                bottom: 60,
+                right: 150,
+                width: 70,
+                height: 70,
               }}
               aria-label='recipe'
             >
-              <LocationOnIcon sx={{ fontSize: 37 }} color='primary' />
+              <Icon></Icon>
             </Avatar>
           }
           sx={{
@@ -319,6 +338,9 @@ const GroupSingleMaterial = () => {
             mt: 0,
             textAlign: 'center',
             fontWeight: 500,
+            position: 'absolute',
+            bottom: 44,
+            right: 145,
           }}
         >
           {children}

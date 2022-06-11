@@ -20,6 +20,14 @@ const paramsJsonSchemaAdd = {
 
 const paramsJsonSchemaGet = {
   type: 'object',
+  required: ['id'],
+  properties: {
+    id: { type: 'number' },
+  },
+};
+
+const paramsJsonSchemaGroup = {
+  type: 'object',
   required: ['id', 'codeGroup'],
   properties: {
     id: { type: 'number' },
@@ -34,4 +42,8 @@ export const addPositionSchema = {
 
 export const getPositionSchema = {
   params: paramsJsonSchemaGet,
+};
+
+export const getPositionsSchema = {
+  params: paramsJsonSchemaGroup,
 };

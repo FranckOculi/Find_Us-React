@@ -12,10 +12,33 @@ import Token from './Token';
 //   });
 // };
 
-export async function getLastPosition(id, codeGroup) {
+export async function getPosition(id) {
   return await axios({
     method: 'GET',
-    url: `http://localhost:3000/position/${id}/${codeGroup}/lastpositions`,
+    url: `http://localhost:3000/position/${id}/lastposition`,
+    withCredentials: true,
+    headers: {
+      authorization: Token.getToken(),
+    },
+  });
+}
+
+export async function addCurrentPosition(id, data) {
+  return await axios({
+    method: 'POST',
+    url: `http://localhost:3000/position/${id}/position`,
+    withCredentials: true,
+    headers: {
+      authorization: Token.getToken(),
+    },
+    data,
+  });
+}
+
+export async function getGroupsPositions(id, data) {
+  return await axios({
+    method: 'GET',
+    url: `http://localhost:3000/position/${id}/${data}/lastpositions`,
     withCredentials: true,
     headers: {
       authorization: Token.getToken(),

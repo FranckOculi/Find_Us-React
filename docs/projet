@@ -147,11 +147,10 @@ positionId INT not null IDENTITY(1,1),
 latitude NUMERIC(22,20) not null,
 longitude NUMERIC(22,20) not null,
 utilisateurPosition INT not null,
-codeEvenement CHAR(8) not null,
 datePosition DATETIME not null CONSTRAINT DF_Positions_datePosition DEFAULT getDate(),
+status VARCHAR(10) NULL DEFAULT 'true',
 CONSTRAINT PK_Positions_positionId PRIMARY KEY (positionId),
 CONSTRAINT FK_Positions_Utilisateurs_utilisateurPosition FOREIGN KEY (utilisateurPosition) REFERENCES Utilisateurs (utilisateurId) ON DELETE CASCADE,
-CONSTRAINT FK_Positions_Evenements_codeEvenement FOREIGN KEY (codeEvenement) REFERENCES Evenements(codeEvenement)
 );
 
 CREATE TABLE Groupes (
@@ -190,10 +189,6 @@ CREATE NONCLUSTERED INDEX FK_Evenements_createur
 
 CREATE NONCLUSTERED INDEX FK_Positions_utilisateurPosition
 	ON Positions(utilisateurPosition ASC)
-;
-
-CREATE NONCLUSTERED INDEX FK_Positions_codeEvenement
-	ON Positions(codeEvenement ASC)
 ;
 
 

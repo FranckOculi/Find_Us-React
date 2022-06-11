@@ -6,7 +6,9 @@ import { clearInfos } from '../feature/user/userInfosSlice';
 import { clearGroupStore } from '../feature/group/groupsSlice';
 import { removeMemberStore } from '../feature/group/groupSingleMembersSlice';
 import { clearAllMembers } from '../feature/group/groupsMembersSlice';
-import { setPosition } from '../feature/position/positionsSlice';
+import { clearAllPositions } from '../feature/group/groupPositionsSlice';
+import { removeSelectedGroup } from '../feature/group/groupSelectedSlice';
+import { setPosition } from '../feature/position/positionSlice';
 import { clearFriends } from '../feature/friend/friendsIdSlice';
 import UserInfos from './UserInfos';
 import UseGroups from './UseGroups';
@@ -61,10 +63,12 @@ export default function UserAuth() {
     dispatch(setId(null));
     dispatch(clearInfos(null));
     dispatch(clearGroupStore(1));
-    dispatch(clearFriends(0));
-    dispatch(setPosition(0));
-    dispatch(removeMemberStore(0));
     dispatch(clearAllMembers(0));
+    dispatch(removeMemberStore(0));
+    dispatch(removeSelectedGroup());
+    dispatch(setPosition(0));
+    dispatch(clearAllPositions());
+    dispatch(clearFriends(0));
   };
 
   const loadData = (res) => {

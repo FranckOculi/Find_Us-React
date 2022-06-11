@@ -1,14 +1,7 @@
 import React from 'react';
 import { Box, Avatar, Typography, Paper } from '@mui/material';
-
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-
-import { createTheme } from '@mui/material/styles';
 import AppTheme from '../../theme/AppTheme';
-import Icon from '@mui/material/Icon';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';

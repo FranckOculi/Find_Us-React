@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export const userPositionsSlice = createSlice({
+export const userPositionSlice = createSlice({
   name: 'position',
   initialState: {
     latitude: null,
@@ -19,5 +19,5 @@ export const userPositionsSlice = createSlice({
   },
 });
 
-export const { setPosition } = userPositionsSlice.actions;
-export default userPositionsSlice.reducer;
+export const { setPosition } = userPositionSlice.actions;
+export default userPositionSlice.reducer;

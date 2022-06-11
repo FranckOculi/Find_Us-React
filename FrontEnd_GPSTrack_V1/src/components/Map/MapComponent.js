@@ -1,29 +1,25 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { MapContainer, Marker, TileLayer, Popup } from 'react-leaflet';
+import GroupsPosition from './GroupsPosition';
 import Loader from '../other/Loader';
 import UsePosition from '../../hooks/UsePosition';
-import { isEmpty } from '../../utils/Utils';
-import UserInfos from '../../hooks/UserInfos';
 import MapMaterial from '../../ui/map/MapMaterial';
+import UserInfos from '../../hooks/UserInfos';
 
 const MapComponent = ({ mapLoaded }) => {
   const isMounted = useRef(true);
   const [loadPage, setLoadPage] = useState(false);
   const [reload, setReload] = useState(false);
-  const { CustomMarker } = MapMaterial();
   const refreshDelay = 5000;
-  const {
-    currentPosition,
-    getFriendsCurrentPosition,
-    loadCurrentPosition,
-    currentFriendsPosition,
-  } = UsePosition();
-  const { userData } = UserInfos();
-
-  const API_ENDPOINT =
-    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
-  const API_URL = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
   let zoom = 15;
+  const {
+    loadCurrentPosition,
+    currentPosition,
+    getLastPosition,
+    savePosition,
+  } = UsePosition();
+  const { userData } = UserInfos;
+  const { UserMarker } = MapMaterial();
 
   //user position
   const getPosition = () => {
@@ -38,9 +34,16 @@ const MapComponent = ({ mapLoaded }) => {
         }
       });
       if (!loadPage) {
+        // savePosition();
         setLoadPage(true);
         return refresh();
       } else {
+        if (
+          userData &&
+          getLastPosition(userData.utilisateurId) !== currentPosition
+        ) {
+          // savePosition(userData.utilisateurId, currentPosition);
+        }
         setTimeout(() => {
           return refresh();
         }, refreshDelay);
@@ -48,10 +51,6 @@ const MapComponent = ({ mapLoaded }) => {
     } catch (e) {
       console.log(e);
     }
-  };
-  //Friends position
-  const getFriendPosition = () => {
-    return getFriendsCurrentPosition(userData.utilisateurId);
   };
 
   //Refresh positions
@@ -61,13 +60,15 @@ const MapComponent = ({ mapLoaded }) => {
       isMounted.current = true;
     }, refreshDelay);
   }
+
   useEffect(() => {
-    console.log('bonjour');
     if (!loadPage) {
       getPosition();
-      getFriendPosition();
     }
-    if (loadPage) getPosition();
+    if (loadPage) {
+      getPosition();
+    }
+
     return () => (isMounted.current = false);
   }, [reload]);
 
@@ -80,29 +81,16 @@ const MapComponent = ({ mapLoaded }) => {
       center={[currentPosition.latitude, currentPosition.longitude]}
       zoom={zoom}
     >
-      <TileLayer attribution={API_ENDPOINT} url={API_URL} />
-      {currentFriendsPosition[0] &&
-        currentFriendsPosition.map(
-          (member) =>
-            member.latitude && (
-              <Marker
-                key={member.utilisateurId}
-                position={[member.latitude, member.longitude]}
-              >
-                <Popup>{member.prenom}</Popup>
-              </Marker>
-            ),
-        )}
-      <Marker position={[currentPosition.latitude, currentPosition.longitude]}>
-        <Popup>You</Popup>
-      </Marker>
-
-      {/* <CustomMarker
-        userData={userData}
+      <TileLayer
+        attribution={process.env.REACT_APP_API_ENDPOINT}
+        url={process.env.REACT_APP_API_URL}
+      />
+      <GroupsPosition />
+      <UserMarker
         position={[currentPosition.latitude, currentPosition.longitude]}
       >
         <Popup>You</Popup>
-      </CustomMarker> */}
+      </UserMarker>
     </MapContainer>
   );
 };

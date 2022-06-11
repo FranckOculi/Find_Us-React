@@ -8,7 +8,7 @@ export async function addPosition(req, res) {
           latitude: req.body.latitude,
           longitude: req.body.longitude,
           utilisateurPosition: req.params.id,
-          codeEvenement: req.body.codeEvenement,
+          // codeEvenement: req.body.codeEvenement,
         },
       ])
       .into('Positions');
@@ -18,67 +18,86 @@ export async function addPosition(req, res) {
   }
 }
 
-export async function getPositions(req, res) {
+export async function getLastPosition(req, res) {
   if (req.headers.tokenInfo.authorization == req.params.id) {
-    const positions = await dbServer
+    const lastPosition = await dbServer
       .select('latitude', 'longitude')
       .from('Positions')
       .where({
         utilisateurPosition: req.params.id,
-        codeEvenement: req.params.codeEvent,
       })
-      .orderBy('datePosition', 'desc');
+      .orderBy('datePosition', 'desc')
+      .limit(1);
     return res
       .code(200)
-      .send({ message: 'All positions', positions: positions });
+      .send({ message: 'Last position', lastPosition: lastPosition });
   } else {
     return res.code(401).send({ message: 'Error token' });
   }
 }
 
-export async function getLastPositions(req, res) {
+export async function getGroupsLastPositions(req, res) {
   if (req.headers.tokenInfo.authorization == req.params.id) {
-    const data = await dbServer
-      .select('latitude', 'longitude', 'utilisateurPosition')
-      .from('Positions')
-      .where({
-        codeEvenement: req.params.codeGroup,
-      })
-      .orderBy('datePosition', 'desc');
+    //fetch membersId > unsorted position > lastPositions :
 
-    const friendsId = [];
-    if (data[0]) {
-      for (let i = 0; i < data.length; i++) {
-        friendsId.push(data[i].utilisateurPosition);
-      }
+    //membersId
+    const membersId = await dbServer
+      .select('membreId')
+      .from('Membres')
+      .join('Groupes as g', 'Membres.groupeCode', '=', 'g.codeGroupe')
+      .where('groupeCode', req.params.codeGroup);
+
+    const parsedMembersId = [];
+    for (let i = 0; i < membersId.length; i++) {
+      parsedMembersId.push(membersId[i].membreId);
     }
 
-    const lastPositions = await dbServer
+    //unsorted position
+    const unsortedPosition = await dbServer
       .select(
-        'utilisateurId',
-        'pseudo',
-        'prenom',
-        'nom',
-        'mail',
-        'numeroTelephone',
-        'photoProfil',
-        'dateCreation',
-        'statusTracking',
+        'positionId',
+        'utilisateurPosition',
         'latitude',
         'longitude',
+        'datePosition',
+      )
+      .rowNumber('maxDate', function () {
+        this.partitionBy('utilisateurPosition');
+        this.orderBy('datePosition');
+      })
+      .whereIn('utilisateurPosition', parsedMembersId)
+      .from('Positions');
+
+    const sortedPosition = [];
+    for (let i = 0; i < unsortedPosition.length; i++) {
+      if (unsortedPosition[i].maxDate == 1) {
+        sortedPosition.push(unsortedPosition[i].positionId);
+      }
+    }
+    //lastPositions
+    const lastPositions = await dbServer
+      .select(
+        'codeGroupe',
+        'utilisateurPosition',
+        'latitude',
+        'longitude',
+        'datePosition',
+        'status',
       )
       .from('Positions')
-      .join(
-        'Utilisateurs as u',
-        'Positions.utilisateurPosition',
-        '=',
-        'u.utilisateurId',
-      )
-      .whereIn('utilisateurId', friendsId)
-      .where({
-        codeEvenement: req.params.codeGroup,
-      })
-      .orderBy('datePosition', 'desc');
+      .join('Membres as m', 'Positions.utilisateurPosition', '=', 'm.membreId')
+      .join('Groupes as g', 'm.groupeCode', '=', 'g.codeGroupe')
+      .where('groupeCode', req.params.codeGroup)
+      .whereIn('positionId', sortedPosition)
+      .groupBy(
+        'codeGroupe',
+        'utilisateurPosition',
+        'latitude',
+        'longitude',
+        'datePosition',
+        'status',
+      );
+
     return res
       .code(200)
       .send({ message: 'Last positions', lastPositions: lastPositions });

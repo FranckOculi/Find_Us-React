@@ -10,7 +10,7 @@ import Loader from '../other/Loader';
 const GroupList = () => {
   const [isLoad, setIsLoad] = useState(false);
   const navigate = useNavigate();
-  const { groupsData } = UseGroups();
+  const { groupsData, loadSelectGroup } = UseGroups();
   const { NewGroupButton, GroupListPaper, GroupListIcon, DivList } =
     GroupListMaterial();
 
@@ -22,7 +22,8 @@ const GroupList = () => {
     if (!isLoad && groupsData) {
       setIsLoad(true);
     }
-  }, []);
+    if (groupsData[0]) loadSelectGroup(groupsData[0].codeGroupe);
+  }, [groupsData[0]]);
 
   if (!isLoad) return <Loader />;
   else if (groupsData[0]) {

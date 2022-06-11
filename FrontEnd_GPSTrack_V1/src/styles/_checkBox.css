@@ -35,16 +35,18 @@
   width: 16px;
   left: 0px;
   bottom: -3px;
-  background-color: #1976d2;
+  background-color: white;
+  box-shadow: 1px 1px 3px gray;
   -webkit-transition: 0.1s;
   transition: 0.1s;
 }
 
-input:checked .slider {
-  background-color: #1976d2;
+input:checked + .slider:before {
 }
 
 input:checked + .slider:before {
+  background-color: #1976d2;
+  box-shadow: 1px 1px 1px gray;
   -webkit-transform: translateX(13px);
   -ms-transform: translateX(13px);
   transform: translateX(13px);

@@ -7,6 +7,7 @@ import {
   reloadMemberStore,
 } from '../feature/group/groupSingleMembersSlice';
 import { addAllMembers } from '../feature/group/groupsMembersSlice';
+import { setSelectedGroup } from '../feature/group/groupSelectedSlice';
 import {
   getGroups,
   addGroup,
@@ -21,6 +22,7 @@ export default function UseGroups() {
   const groupsData = useSelector((state) => state.groups);
   const membersData = useSelector((state) => state.groupSingleMembers);
   const allMembersData = useSelector((state) => state.groupsMembers);
+  const selectedGroup = useSelector((state) => state.groupSelected.groupCode);
 
   /*  Groups  */
   const loadGroupsData = async (userId, data) => {
@@ -36,8 +38,8 @@ export default function UseGroups() {
           i++;
         } while (i < res.data.userGroups.length);
       }
-      if (res?.data?.membresData) {
-        const data = res.data.membresData.sort(function (a, b) {
+      if (res?.data?.membersData) {
+        const data = res.data.membersData.sort(function (a, b) {
           return a.groupeCode.toString().localeCompare(b.groupeCode.toString());
         });
         const sortedMember = _.groupBy(data, 'groupeCode');
@@ -108,6 +110,21 @@ export default function UseGroups() {
     }, 500);
   };
 
+  const getMember = (memberData, groupCode) => {
+    const data = [];
+    allMembersData.groupes[groupCode].map((member) => {
+      if (member.utilisateurId === memberData.utilisateurPosition) {
+        data.push(member);
+      }
+    });
+
+    return data[0].pseudo;
+  };
+
+  const loadSelectGroup = (groupCode) => {
+    dispatch(setSelectedGroup(groupCode));
+  };
+
   return {
     groupsData,
     loadGroupsData,
@@ -116,10 +133,13 @@ export default function UseGroups() {
     membersData,
     createGroup,
     removeGroup,
+    loadSelectGroup,
+    selectedGroup,
     removeMember,
     // loadAllMembers,
     allMembersData,
     addMemberToGroup,
     reloadMember,
+    getMember,
   };
 }

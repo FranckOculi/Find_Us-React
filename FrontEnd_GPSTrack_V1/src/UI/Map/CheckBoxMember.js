@@ -10,6 +10,7 @@ import Collapse from '@mui/material/Collapse';
 import { Paper } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import Divider from '@mui/material/Divider';
+import UsePosition from '../../hooks/UsePosition';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -22,9 +23,10 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const Checkbox = ({ id, type, name, handleClick, isChecked }) => {
+const Checkbox = ({ className, id, type, name, handleClick, isChecked }) => {
   return (
     <input
+      className={className}
       id={id}
       name={name}
       type={type}
@@ -34,10 +36,11 @@ const Checkbox = ({ id, type, name, handleClick, isChecked }) => {
   );
 };
 
-const Switch = ({ id, type, name, handleClick, isChecked }) => {
+const Switch = ({ className, id, type, name, handleClick, isChecked }) => {
   return (
     <label className='switch'>
       <input
+        className={className}
         id={id}
         name={name}
         type={type}
@@ -58,12 +61,16 @@ const CheckBoxMember = ({
 }) => {
   const { allMembersData } = UseGroups();
   const { userData } = UserInfos();
-  const [isCheckAll, setIsCheckAll] = useState(false);
-  const [isCheck, setIsCheck] = useState([]);
+  const [isCheckAll, setIsCheckAll] = useState(true);
+  const [isCheck, setIsCheck] = useState(
+    allMembersData.groupes[group.codeGroupe].map((member) => {
+      if (member.utilisateurId !== userData.utilisateurId) {
+        return member.groupeCode + member.utilisateurId;
+      }
+    }),
+  );
+  const { loadStatus, loadAllStatus } = UsePosition();
   const [expandedGroup, setExpandedGroup] = useState(false);
-
-  // const { MapPhoto, MapLogoDefault, MapPhotoMember, MapLogoMemberDefault } =
-  //   AppAvatar();
 
   const handleExpandDescription = () => {
     setExpandedGroup(!expandedGroup);
@@ -72,10 +79,14 @@ const CheckBoxMember = ({
   const handleSelectAll = (e) => {
     setIsCheckAll(!isCheckAll);
     setIsCheck(
-      allMembersData.groupes[group.codeGroupe].map(
-        (member) => member.groupeCode + member.utilisateurId,
-      ),
+      allMembersData.groupes[group.codeGroupe].map((member) => {
+        if (member.utilisateurId !== userData.utilisateurId) {
+          return member.groupeCode + member.utilisateurId;
+        }
+      }),
     );
+
+    loadAllStatus(!isCheckAll);
     if (isCheckAll) {
       setIsCheck([]);
     }
@@ -84,6 +95,10 @@ const CheckBoxMember = ({
   const handleClick = (e) => {
     const { id, checked } = e.target;
     setIsCheck([...isCheck, id]);
+    const memberId = e.target.id.substr(8);
+    const status = e.target.checked;
+    loadStatus(memberId, status);
+
     if (!checked) {
       setIsCheck(isCheck.filter((item) => item !== id));
     }
@@ -116,8 +131,8 @@ const CheckBoxMember = ({
                 <Switch
                   key={member.groupeCode + member.utilisateurId}
                   type='checkbox'
-                  name={member.pseudo}
                   id={member.groupeCode + member.utilisateurId}
+                  name={member.pseudo}
                   handleClick={handleClick}
                   isChecked={isCheck.includes(
                     member.groupeCode + member.utilisateurId,
@@ -147,8 +162,8 @@ const CheckBoxMember = ({
               <>
                 <Switch
                   type='checkbox'
-                  name={group.nomGroupe}
-                  id='selectAll'
+                  className='selectAll'
+                  name='selectAll'
                   handleClick={handleSelectAll}
                   isChecked={isCheckAll}
                 />

@@ -1,11 +1,12 @@
 import {
   addPosition,
-  getPositions,
-  getLastPositions,
+  getLastPosition,
+  getGroupsLastPositions,
 } from '../controllers/positionController.js';
 import {
   addPositionSchema,
   getPositionSchema,
+  getPositionsSchema,
 } from '../schemas/positionSchema.js';
 import { tokenVerification } from '../middleware/authMiddleware.js';
 
@@ -20,18 +21,18 @@ async function positionRoutes(fastify, options, done) {
 
   fastify.route({
     method: 'GET',
-    url: '/:id/:codeGroup/positions',
+    url: '/:id/lastposition',
     schema: getPositionSchema,
     preHandler: tokenVerification,
-    handler: getPositions,
+    handler: getLastPosition,
   });
 
   fastify.route({
     method: 'GET',
     url: '/:id/:codeGroup/lastpositions',
-    schema: getPositionSchema,
+    schema: getPositionsSchema,
     preHandler: tokenVerification,
-    handler: getLastPositions,
+    handler: getGroupsLastPositions,
   });
 }
 export default positionRoutes;

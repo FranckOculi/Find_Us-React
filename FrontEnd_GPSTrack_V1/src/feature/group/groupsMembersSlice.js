@@ -10,10 +10,7 @@ export const userGroupMembers = createSlice({
     },
     clearAllMembers: (state, { payload }) => {
       if (state.groupes === null) return;
-      for (let i = 0; i < state.groupes.length; i++) {
-        state.groupes[i] = null;
-      }
-      // state.groupes = null;
+      state.groupes = null;
     },
   },
 });

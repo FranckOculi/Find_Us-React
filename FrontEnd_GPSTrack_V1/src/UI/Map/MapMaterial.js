@@ -49,7 +49,7 @@ const MapMaterial = () => {
               <ExpandLessIcon />
             </ExpandMore>
           }
-          subheader={'Groups'}
+          subheader={'Members'}
           sx={{ mt: -2.5, ml: 3, mb: -2.5, textAlign: 'center' }}
         />
         <Collapse
@@ -64,22 +64,38 @@ const MapMaterial = () => {
     );
   };
 
-  const CustomMarker = ({ position, children }) => {
-    function getIcon(_iconSize) {
-      return L.icon({
-        iconUrl: require('../../img/logo.png'),
-        iconSize: [_iconSize],
-      });
-    }
-
+  const UserMarker = ({ position, children }) => {
+    const icon = require('../../img/icon/userMarker.png');
     return (
-      <Marker position={position} icon={getIcon(20, 20)}>
+      <Marker
+        position={position}
+        icon={L.icon({
+          iconUrl: icon,
+          iconSize: 50,
+        })}
+      >
         {children}
       </Marker>
     );
   };
 
-  return { SelectGroupCard, CustomMarker };
+  const MembersMarker = ({ position, children }) => {
+    const icon = require('../../img/icon/membersMarker.png');
+
+    return (
+      <Marker
+        position={position}
+        icon={L.icon({
+          iconUrl: icon,
+          iconSize: 45,
+        })}
+      >
+        {children}
+      </Marker>
+    );
+  };
+
+  return { SelectGroupCard, UserMarker, MembersMarker };
 };
 
 export default MapMaterial;
